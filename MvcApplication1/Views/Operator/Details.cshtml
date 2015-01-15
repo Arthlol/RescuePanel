@@ -1,0 +1,43 @@
+﻿@model MvcApplication1.Models.Operator
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Operator</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Employee.WorkPhone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Employee.WorkPhone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.WorkShift)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.WorkShift)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MayWorkOvertime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MayWorkOvertime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HomePhone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HomePhone)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

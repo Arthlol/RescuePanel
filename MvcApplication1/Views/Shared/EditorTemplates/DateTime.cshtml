@@ -1,0 +1,3 @@
+﻿@inherits System.Web.Mvc.WebViewPage<System.DateTime?>
+@Html.TextBox("", string.Format("{0:yyyy-MM-dd HH:mm}", 
+              Model.HasValue ? Model : null), new { @class = "dateTimePicker" })

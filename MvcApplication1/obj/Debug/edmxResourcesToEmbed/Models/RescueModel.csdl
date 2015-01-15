@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RescueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="IpAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserInformation" Relationship="Self.FK_Administrator_UserInformation" FromRole="Administrator" ToRole="UserInformation" />
+  </EntityType>
+  <EntityType Name="Car">
+    <Key>
+      <PropertyRef Name="CarId" />
+    </Key>
+    <Property Name="CarId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CarNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CarBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CarModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CarCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="EmergencyTeamDepartures" Relationship="Self.FK_EmergencyTeamDeparture_Car" FromRole="Car" ToRole="EmergencyTeamDeparture" />
+    <NavigationProperty Name="RescueEquipmentSets" Relationship="Self.FK_RescueEquipmentSet_Car" FromRole="Car" ToRole="RescueEquipmentSet" />
+  </EntityType>
+  <EntityType Name="Driver">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EmergencyTeamId" Type="Int32" Nullable="false" />
+    <Property Name="RecertificationDate" Type="DateTime" Precision="7" />
+    <Property Name="MedicalCertificateNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DrivingLicenseCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="EmergencyTeam" Relationship="Self.FK_Driver_EmergencyTeam" FromRole="Driver" ToRole="EmergencyTeam" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Driver_Employee" FromRole="Driver" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="EmergencyTeam">
+    <Key>
+      <PropertyRef Name="EmergencyTeamId" />
+    </Key>
+    <Property Name="EmergencyTeamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="Drivers" Relationship="Self.FK_Driver_EmergencyTeam" FromRole="EmergencyTeam" ToRole="Driver" />
+    <NavigationProperty Name="EmergencyTeamDepartures" Relationship="Self.FK_EmergencyTeamDeparture_EmergencyTeam" FromRole="EmergencyTeam" ToRole="EmergencyTeamDeparture" />
+    <NavigationProperty Name="Rescuers" Relationship="Self.FK_Rescuer_Employee" FromRole="EmergencyTeam" ToRole="Rescuer" />
+  </EntityType>
+  <EntityType Name="EmergencyTeamDeparture">
+    <Key>
+      <PropertyRef Name="DepartureId" />
+    </Key>
+    <Property Name="DepartureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestId" Type="Int32" Nullable="false" />
+    <Property Name="EmergencyTeamId" Type="Int32" Nullable="false" />
+    <Property Name="CarId" Type="Int32" Nullable="false" />
+    <Property Name="DepartureDate" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="Car" Relationship="Self.FK_EmergencyTeamDeparture_Car" FromRole="EmergencyTeamDeparture" ToRole="Car" />
+    <NavigationProperty Name="EmergencyTeam" Relationship="Self.FK_EmergencyTeamDeparture_EmergencyTeam" FromRole="EmergencyTeamDeparture" ToRole="EmergencyTeam" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_EmergencyTeamDeparture_Request" FromRole="EmergencyTeamDeparture" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="JobTitleId" Type="Int32" Nullable="false" />
+    <Property Name="PersonalNumber" Type="Int32" />
+    <Property Name="WorkPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Driver" Relationship="Self.FK_Driver_Employee" FromRole="Employee" ToRole="Driver" />
+    <NavigationProperty Name="JobTitle" Relationship="Self.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+    <NavigationProperty Name="UserInformation" Relationship="Self.FK_Employee_UserInformation" FromRole="Employee" ToRole="UserInformation" />
+    <NavigationProperty Name="Operator" Relationship="Self.FK_Operator_Employee" FromRole="Employee" ToRole="Operator" />
+  </EntityType>
+  <EntityType Name="JobTitle">
+    <Key>
+      <PropertyRef Name="JobTitleId" />
+    </Key>
+    <Property Name="JobTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobTitleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Operator">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="WorkShift" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MayWorkOvertime" Type="Boolean" />
+    <Property Name="HomePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Operator_Employee" FromRole="Operator" ToRole="Employee" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Request_Operator" FromRole="Operator" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="RequestId" />
+    </Key>
+    <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="RequestStatusId" Type="Int32" Nullable="false" />
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="DeclarantName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeclarantLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeclarantMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RequestDate" Type="DateTime" Precision="7" />
+    <Property Name="DeclarantPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RequestReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FakeRequest" Type="Boolean" />
+    <NavigationProperty Name="EmergencyTeamDepartures" Relationship="Self.FK_EmergencyTeamDeparture_Request" FromRole="Request" ToRole="EmergencyTeamDeparture" />
+    <NavigationProperty Name="Operator" Relationship="Self.FK_Request_Operator" FromRole="Request" ToRole="Operator" />
+    <NavigationProperty Name="RequestStatu" Relationship="Self.FK_Request_RequestStatus" FromRole="Request" ToRole="RequestStatus" />
+    <NavigationProperty Name="RequestType" Relationship="Self.FK_Request_RequestType" FromRole="Request" ToRole="RequestType" />
+  </EntityType>
+  <EntityType Name="RequestStatu">
+    <Key>
+      <PropertyRef Name="RequestStatusId" />
+    </Key>
+    <Property Name="RequestStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestStatusName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Request_RequestStatus" FromRole="RequestStatus" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="RequestType">
+    <Key>
+      <PropertyRef Name="RequestTypeId" />
+    </Key>
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="RequestTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Request_RequestType" FromRole="RequestType" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="RescueEquipmentSet">
+    <Key>
+      <PropertyRef Name="RescueEquipmentSetId" />
+    </Key>
+    <Property Name="RescueEquipmentSetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CarId" Type="Int32" Nullable="false" />
+    <Property Name="RescueEquipmentCount" Type="Int32" />
+    <Property Name="RescueEquipmentCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RescueEquipmentDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RescueEquipmentClassification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Car" Relationship="Self.FK_RescueEquipmentSet_Car" FromRole="RescueEquipmentSet" ToRole="Car" />
+  </EntityType>
+  <EntityType Name="Rescuer">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EmergencyTeamId" Type="Int32" Nullable="false" />
+    <Property Name="HeadOfGroup" Type="Boolean" />
+    <Property Name="MedicalBoardPassageDate" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="EmergencyTeam" Relationship="Self.FK_Rescuer_Employee" FromRole="Rescuer" ToRole="EmergencyTeam" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserInformation">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PersonalPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDate" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="Administrator" Relationship="Self.FK_Administrator_UserInformation" FromRole="UserInformation" ToRole="Administrator" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_UserInformation" FromRole="UserInformation" ToRole="Employee" />
+    <NavigationProperty Name="UserProfile" Relationship="RescueModel.FK_UserInformation_UserProfile" FromRole="UserInformation" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="webpages_Membership">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IsConfirmed" Type="Boolean" />
+    <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
+    <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
+    <Property Name="PasswordSalt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="webpages_OAuthMembership">
+    <Key>
+      <PropertyRef Name="Provider" />
+      <PropertyRef Name="ProviderUserId" />
+    </Key>
+    <Property Name="Provider" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderUserId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="webpages_Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="webpages_UsersInRoles" Relationship="Self.fk_RoleId" FromRole="webpages_Roles" ToRole="webpages_UsersInRoles" />
+  </EntityType>
+  <EntityType Name="webpages_UsersInRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="webpages_Roles" Relationship="Self.fk_RoleId" FromRole="webpages_UsersInRoles" ToRole="webpages_Roles" />
+  </EntityType>
+  <Association Name="FK_Administrator_UserInformation">
+    <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="1" />
+    <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserInformation">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Administrator">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmergencyTeamDeparture_Car">
+    <End Role="Car" Type="Self.Car" Multiplicity="1" />
+    <End Role="EmergencyTeamDeparture" Type="Self.EmergencyTeamDeparture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="CarId" />
+      </Principal>
+      <Dependent Role="EmergencyTeamDeparture">
+        <PropertyRef Name="CarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RescueEquipmentSet_Car">
+    <End Role="Car" Type="Self.Car" Multiplicity="1" />
+    <End Role="RescueEquipmentSet" Type="Self.RescueEquipmentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="CarId" />
+      </Principal>
+      <Dependent Role="RescueEquipmentSet">
+        <PropertyRef Name="CarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Driver_EmergencyTeam">
+    <End Role="EmergencyTeam" Type="Self.EmergencyTeam" Multiplicity="1" />
+    <End Role="Driver" Type="Self.Driver" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmergencyTeam">
+        <PropertyRef Name="EmergencyTeamId" />
+      </Principal>
+      <Dependent Role="Driver">
+        <PropertyRef Name="EmergencyTeamId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Driver_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Driver" Type="Self.Driver" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Driver">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmergencyTeamDeparture_EmergencyTeam">
+    <End Role="EmergencyTeam" Type="Self.EmergencyTeam" Multiplicity="1" />
+    <End Role="EmergencyTeamDeparture" Type="Self.EmergencyTeamDeparture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmergencyTeam">
+        <PropertyRef Name="EmergencyTeamId" />
+      </Principal>
+      <Dependent Role="EmergencyTeamDeparture">
+        <PropertyRef Name="EmergencyTeamId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rescuer_Employee">
+    <End Role="EmergencyTeam" Type="Self.EmergencyTeam" Multiplicity="1" />
+    <End Role="Rescuer" Type="Self.Rescuer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmergencyTeam">
+        <PropertyRef Name="EmergencyTeamId" />
+      </Principal>
+      <Dependent Role="Rescuer">
+        <PropertyRef Name="EmergencyTeamId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmergencyTeamDeparture_Request">
+    <End Role="Request" Type="Self.Request" Multiplicity="1" />
+    <End Role="EmergencyTeamDeparture" Type="Self.EmergencyTeamDeparture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="EmergencyTeamDeparture">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_JobTitle">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitle">
+        <PropertyRef Name="JobTitleId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="JobTitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_UserInformation">
+    <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserInformation">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Operator_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Operator" Type="Self.Operator" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Operator">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request_Operator">
+    <End Role="Operator" Type="Self.Operator" Multiplicity="1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Operator">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request_RequestStatus">
+    <End Role="RequestStatus" Type="Self.RequestStatu" Multiplicity="1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestStatus">
+        <PropertyRef Name="RequestStatusId" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="RequestStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request_RequestType">
+    <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestType">
+        <PropertyRef Name="RequestTypeId" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RoleId">
+    <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
+    <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="webpages_Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="webpages_UsersInRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RescueEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Administrators" EntityType="Self.Administrator" />
+    <EntitySet Name="Cars" EntityType="Self.Car" />
+    <EntitySet Name="Drivers" EntityType="Self.Driver" />
+    <EntitySet Name="EmergencyTeams" EntityType="Self.EmergencyTeam" />
+    <EntitySet Name="EmergencyTeamDepartures" EntityType="Self.EmergencyTeamDeparture" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
+    <EntitySet Name="Operators" EntityType="Self.Operator" />
+    <EntitySet Name="Requests" EntityType="Self.Request" />
+    <EntitySet Name="RequestStatus" EntityType="Self.RequestStatu" />
+    <EntitySet Name="RequestTypes" EntityType="Self.RequestType" />
+    <EntitySet Name="RescueEquipmentSets" EntityType="Self.RescueEquipmentSet" />
+    <EntitySet Name="Rescuers" EntityType="Self.Rescuer" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="UserInformations" EntityType="Self.UserInformation" />
+    <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" />
+    <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" />
+    <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" />
+    <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" />
+    <AssociationSet Name="FK_Administrator_UserInformation" Association="Self.FK_Administrator_UserInformation">
+      <End Role="UserInformation" EntitySet="UserInformations" />
+      <End Role="Administrator" EntitySet="Administrators" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmergencyTeamDeparture_Car" Association="Self.FK_EmergencyTeamDeparture_Car">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDepartures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RescueEquipmentSet_Car" Association="Self.FK_RescueEquipmentSet_Car">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="RescueEquipmentSet" EntitySet="RescueEquipmentSets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Driver_EmergencyTeam" Association="Self.FK_Driver_EmergencyTeam">
+      <End Role="EmergencyTeam" EntitySet="EmergencyTeams" />
+      <End Role="Driver" EntitySet="Drivers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Driver_Employee" Association="Self.FK_Driver_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Driver" EntitySet="Drivers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmergencyTeamDeparture_EmergencyTeam" Association="Self.FK_EmergencyTeamDeparture_EmergencyTeam">
+      <End Role="EmergencyTeam" EntitySet="EmergencyTeams" />
+      <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDepartures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rescuer_Employee" Association="Self.FK_Rescuer_Employee">
+      <End Role="EmergencyTeam" EntitySet="EmergencyTeams" />
+      <End Role="Rescuer" EntitySet="Rescuers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmergencyTeamDeparture_Request" Association="Self.FK_EmergencyTeamDeparture_Request">
+      <End Role="Request" EntitySet="Requests" />
+      <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDepartures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
+      <End Role="JobTitle" EntitySet="JobTitles" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_UserInformation" Association="Self.FK_Employee_UserInformation">
+      <End Role="UserInformation" EntitySet="UserInformations" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Operator_Employee" Association="Self.FK_Operator_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Operator" EntitySet="Operators" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request_Operator" Association="Self.FK_Request_Operator">
+      <End Role="Operator" EntitySet="Operators" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request_RequestStatus" Association="Self.FK_Request_RequestStatus">
+      <End Role="RequestStatus" EntitySet="RequestStatus" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request_RequestType" Association="Self.FK_Request_RequestType">
+      <End Role="RequestType" EntitySet="RequestTypes" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
+      <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+      <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+    </AssociationSet>
+    <EntitySet Name="UserProfiles" EntityType="RescueModel.UserProfile" />
+    <AssociationSet Name="FK_UserInformation_UserProfile" Association="RescueModel.FK_UserInformation_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="UserInformation" EntitySet="UserInformations" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserInformation" Relationship="RescueModel.FK_UserInformation_UserProfile" FromRole="UserProfile" ToRole="UserInformation" />
+  </EntityType>
+  <Association Name="FK_UserInformation_UserProfile">
+    <End Type="RescueModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+    <End Type="RescueModel.UserInformation" Role="UserInformation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserInformation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

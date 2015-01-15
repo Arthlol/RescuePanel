@@ -1,0 +1,50 @@
+﻿@model MvcApplication1.Models.Driver
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Driver</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Employee.WorkPhone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Employee.WorkPhone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmergencyTeam.EmergencyTeamId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmergencyTeam.EmergencyTeamId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RecertificationDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RecertificationDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MedicalCertificateNum)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MedicalCertificateNum)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DrivingLicenseCategory)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DrivingLicenseCategory)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

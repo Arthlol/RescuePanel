@@ -1,0 +1,43 @@
+﻿@model MvcApplication1.Models.Rescuer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Rescuer</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Employee.WorkPhone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Employee.WorkPhone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmergencyTeam.EmergencyTeamId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmergencyTeam.EmergencyTeamId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HeadOfGroup)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HeadOfGroup)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MedicalBoardPassageDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MedicalBoardPassageDate)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
