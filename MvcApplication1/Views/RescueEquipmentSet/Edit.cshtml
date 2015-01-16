@@ -1,0 +1,70 @@
+﻿@model MvcApplication1.Models.RescueEquipmentSet
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>RescueEquipmentSet</legend>
+
+        @Html.HiddenFor(model => model.RescueEquipmentSetId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CarId, "Car")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CarId", String.Empty)
+            @Html.ValidationMessageFor(model => model.CarId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RescueEquipmentCount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RescueEquipmentCount)
+            @Html.ValidationMessageFor(model => model.RescueEquipmentCount)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RescueEquipmentCondition)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RescueEquipmentCondition)
+            @Html.ValidationMessageFor(model => model.RescueEquipmentCondition)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RescueEquipmentDescription)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RescueEquipmentDescription)
+            @Html.ValidationMessageFor(model => model.RescueEquipmentDescription)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RescueEquipmentClassification)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RescueEquipmentClassification)
+            @Html.ValidationMessageFor(model => model.RescueEquipmentClassification)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

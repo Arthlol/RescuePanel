@@ -1,0 +1,50 @@
+﻿@model MvcApplication1.Models.RescueEquipmentSet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>RescueEquipmentSet</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Car.CarNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Car.CarNumber)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RescueEquipmentCount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RescueEquipmentCount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RescueEquipmentCondition)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RescueEquipmentCondition)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RescueEquipmentDescription)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RescueEquipmentDescription)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RescueEquipmentClassification)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RescueEquipmentClassification)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.RescueEquipmentSetId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

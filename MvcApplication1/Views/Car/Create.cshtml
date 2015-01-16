@@ -1,0 +1,60 @@
+﻿@model MvcApplication1.Models.Car
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Car</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CarNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CarNumber)
+            @Html.ValidationMessageFor(model => model.CarNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CarBrand)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CarBrand)
+            @Html.ValidationMessageFor(model => model.CarBrand)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CarModel)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CarModel)
+            @Html.ValidationMessageFor(model => model.CarModel)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CarCondition)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CarCondition)
+            @Html.ValidationMessageFor(model => model.CarCondition)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

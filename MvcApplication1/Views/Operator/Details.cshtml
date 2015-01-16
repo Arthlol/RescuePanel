@@ -38,6 +38,13 @@
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new {  id=Model.UserId }) |
+    @if (User.IsInRole("Administrator")) 
+    { 
+    @Html.ActionLink("К списку всех операторов", "Index")
+    }
+    else
+    { 
+    @Html.ActionLink("Назад", "Edit", "Employee", new { id = WebSecurity.CurrentUserId}, null)
+    }
 </p>

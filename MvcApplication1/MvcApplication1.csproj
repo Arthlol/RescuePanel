@@ -185,11 +185,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\EmergencyTeamController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OperatorController.cs" />
+    <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\RescueEquipmentSetController.cs" />
     <Compile Include="Controllers\RescuerController.cs" />
     <Compile Include="Controllers\UserInformationController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
@@ -456,6 +459,21 @@
     <Content Include="Views\EmergencyTeam\Create.cshtml" />
     <Content Include="Views\EmergencyTeam\Edit.cshtml" />
     <Content Include="Views\EmergencyTeam\Delete.cshtml" />
+    <Content Include="Views\Car\Index.cshtml" />
+    <Content Include="Views\Car\Details.cshtml" />
+    <Content Include="Views\Car\Create.cshtml" />
+    <Content Include="Views\Car\Edit.cshtml" />
+    <Content Include="Views\Car\Delete.cshtml" />
+    <Content Include="Views\RescueEquipmentSet\Index.cshtml" />
+    <Content Include="Views\RescueEquipmentSet\Details.cshtml" />
+    <Content Include="Views\RescueEquipmentSet\Create.cshtml" />
+    <Content Include="Views\RescueEquipmentSet\Edit.cshtml" />
+    <Content Include="Views\RescueEquipmentSet\Delete.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
+    <Content Include="Views\Request\Details.cshtml" />
+    <Content Include="Views\Request\Create.cshtml" />
+    <Content Include="Views\Request\Edit.cshtml" />
+    <Content Include="Views\Request\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

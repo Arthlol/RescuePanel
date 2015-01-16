@@ -1,0 +1,43 @@
+﻿@model MvcApplication1.Models.Car
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Car</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CarNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CarNumber)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CarBrand)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CarBrand)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CarModel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CarModel)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CarCondition)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CarCondition)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CarId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

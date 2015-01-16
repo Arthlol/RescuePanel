@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MvcApplication1.Models.RescueEquipmentSet>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Car.CarNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RescueEquipmentCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RescueEquipmentCondition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RescueEquipmentDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RescueEquipmentClassification)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Car.CarNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RescueEquipmentCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RescueEquipmentCondition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RescueEquipmentDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RescueEquipmentClassification)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RescueEquipmentSetId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RescueEquipmentSetId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RescueEquipmentSetId })
+        </td>
+    </tr>
+}
+
+</table>

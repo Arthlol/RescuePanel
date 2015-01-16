@@ -1,0 +1,54 @@
+﻿@model MvcApplication1.Models.RescueEquipmentSet
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>RescueEquipmentSet</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Car.CarNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Car.CarNumber)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RescueEquipmentCount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RescueEquipmentCount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RescueEquipmentCondition)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RescueEquipmentCondition)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RescueEquipmentDescription)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RescueEquipmentDescription)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RescueEquipmentClassification)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RescueEquipmentClassification)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

@@ -1,0 +1,92 @@
+﻿@model MvcApplication1.Models.Request
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Request</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Operator.WorkShift)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Operator.WorkShift)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RequestStatus.RequestStatusName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RequestStatus.RequestStatusName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RequestType.RequestTypeName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RequestType.RequestTypeName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeclarantName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeclarantName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeclarantLastName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeclarantLastName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeclarantMiddleName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeclarantMiddleName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RequestDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RequestDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeclarantPhone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeclarantPhone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Address)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RequestReason)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RequestReason)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FakeRequest)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FakeRequest)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.RequestId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
