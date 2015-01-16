@@ -10,7 +10,7 @@
 <p class="message-success">@ViewBag.StatusMessage</p>
 
 <p>You're logged in as <strong>@User.Identity.Name</strong>.</p>
-
+<p></p>
 @if (ViewBag.HasLocalPassword)
 {
     @Html.Partial("_ChangePasswordPartial")
@@ -24,9 +24,18 @@ else
 
 
     <h3>Изменить информацию о себе</h3>
-   
+    
     @Html.ActionLink("Информация", "Edit", "UserInformation", new { id = WebSecurity.CurrentUserId}, null)
+    @if (User.IsInRole("Administrator")) { 
+        @Html.ActionLink("Информация администратора", "Edit", "Admin", new { id = WebSecurity.CurrentUserId }, null); 
+    }
+    @if (User.IsInRole("Employee"))
+    {
+        @Html.ActionLink("Информация работника", "Edit", "Employee", new { id = WebSecurity.CurrentUserId }, null);
+    }
 
+    
+       
 </section>
 
 @section Scripts {

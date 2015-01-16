@@ -41,6 +41,7 @@
     <NavigationProperty Name="Driver" Relationship="Self.FK_Driver_EmergencyTeam" FromRole="EmergencyTeam" ToRole="Driver" />
     <NavigationProperty Name="EmergencyTeamDeparture" Relationship="Self.FK_EmergencyTeamDeparture_EmergencyTeam" FromRole="EmergencyTeam" ToRole="EmergencyTeamDeparture" />
     <NavigationProperty Name="Rescuer" Relationship="Self.FK_Rescuer_Employee" FromRole="EmergencyTeam" ToRole="Rescuer" />
+    <Property Name="EmergencyTeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="EmergencyTeamDeparture">
     <Key>

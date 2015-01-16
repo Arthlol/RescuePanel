@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.UserInformation.LastName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.UserInformation.Name)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th></th>
@@ -26,12 +29,15 @@
             @Html.DisplayFor(modelItem => item.UserInformation.LastName)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.UserInformation.Name)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Данные", "Details", "UserInformation", new { id = item.UserId }, null) |
+            @Html.ActionLink("Править", "Edit", "UserInformation", new { id = item.UserId }, null) 
+            
         </td>
     </tr>
 }

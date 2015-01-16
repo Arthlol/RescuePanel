@@ -33,6 +33,7 @@
     </Key>
     <Property Name="EmergencyTeamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CreateDate" Type="datetime2" Precision="7" />
+    <Property Name="EmergencyTeamName" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="EmergencyTeamDeparture">
     <Key>
@@ -264,7 +265,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Employee_JobTitle">
-    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="JobTitle">
@@ -276,7 +279,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Employee_UserInformation">
-    <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="1" />
+    <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="UserInformation">
@@ -384,7 +389,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_UserId">
-    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserProfile">

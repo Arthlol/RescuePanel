@@ -24,23 +24,10 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.JobTitleId, "JobTitle")
         </div>
-        <div class="editor-label">
-            @Html.Label("1 - Оператор ИДЦ")
-            @Html.Label("2 - Водитель")
-            @Html.Label("3 - Сотрудник поисково-спасательного отряда")
-        </div>
         <div class="editor-field">
             @Html.DropDownList("JobTItleId", String.Empty)
             @Html.ValidationMessageFor(model => model.JobTitleId)
         </div>
-
-        @*<div class="editor-label">
-            @Html.LabelFor(model => model.JobTitleId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.JobTitleId)
-            @Html.ValidationMessageFor(model => model.JobTitleId)
-        </div>*@
 
         <div class="editor-label">
             @Html.LabelFor(model => model.PersonalNumber)

@@ -34,6 +34,7 @@
     <EntitySetMapping Name="EmergencyTeam">
       <EntityTypeMapping TypeName="RescueModelNamespace.EmergencyTeam">
         <MappingFragment StoreEntitySet="EmergencyTeam">
+          <ScalarProperty Name="EmergencyTeamName" ColumnName="EmergencyTeamName" />
           <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
         </MappingFragment>

@@ -64,7 +64,7 @@ namespace MvcApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Administrator.First(x => x.UserId == administrator.UserId) == null)
+                if (db.Administrator.Where(x => x.UserId == administrator.UserId).Count() == 0)
                 {
                     db.Administrator.Add(administrator);
                     db.SaveChanges();

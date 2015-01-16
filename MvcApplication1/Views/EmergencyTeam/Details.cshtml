@@ -15,6 +15,13 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.CreateDate)
     </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmergencyTeamName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmergencyTeamName)
+    </div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.EmergencyTeamId }) |

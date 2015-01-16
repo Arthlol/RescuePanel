@@ -41,7 +41,7 @@ namespace MvcApplication1.Controllers
         public ActionResult Create()
         {
             ViewBag.UserId = new SelectList(db.UserInformation.Where(x => x.Administrator == null && x.Employee == null), "UserId", "UserId");
-            ViewBag.JobTitleId = new SelectList(db.JobTitle, "JobTitleId", "JobTitleId");
+            ViewBag.JobTitleId = new SelectList(db.JobTitle, "JobTitleId", "JobTitleName");
             return View();
         }
 
@@ -74,9 +74,9 @@ namespace MvcApplication1.Controllers
                     {
                         return RedirectToAction("Create", "Driver");
                     }
-                    if (employee.JobTitleId == 2)
+                    if (employee.JobTitleId == 3)
                     {
-                        return RedirectToAction("Create", "Driver");
+                        return RedirectToAction("Create", "Rescuer");
                     }
 
                 }
@@ -92,6 +92,7 @@ namespace MvcApplication1.Controllers
         public ActionResult Edit(int id = 0)
         {
             Employee employee = db.Employee.Find(id);
+            ViewBag.JobTitleId = new SelectList(db.JobTitle, "JobTitleId", "JobTitleName",employee.JobTitleId);
             if (employee == null)
             {
                 return HttpNotFound();

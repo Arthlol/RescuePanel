@@ -23,6 +23,7 @@ namespace MvcApplication1.Models
     
         public int EmergencyTeamId { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public string EmergencyTeamName { get; set; }
     
         public virtual ICollection<Driver> Driver { get; set; }
         public virtual ICollection<EmergencyTeamDeparture> EmergencyTeamDeparture { get; set; }

@@ -41,7 +41,7 @@ namespace MvcApplication1.Controllers
         public ActionResult Create()
         {
             ViewBag.EmergencyTeamId = new SelectList(db.EmergencyTeam, "EmergencyTeamId", "EmergencyTeamId");
-            ViewBag.UserId = new SelectList(db.Employee, "UserId", "WorkPhone");
+            ViewBag.UserId = new SelectList(db.Employee, "UserId", "UserId");
             return View();
         }
 
