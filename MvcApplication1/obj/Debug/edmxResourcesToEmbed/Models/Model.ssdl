@@ -37,9 +37,9 @@
   </EntityType>
   <EntityType Name="EmergencyTeamDeparture">
     <Key>
-      <PropertyRef Name="DepartureId" />
+      <PropertyRef Name="EmergencyTeamDepartureId" />
     </Key>
-    <Property Name="DepartureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmergencyTeamDepartureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RequestId" Type="int" Nullable="false" />
     <Property Name="EmergencyTeamId" Type="int" Nullable="false" />
     <Property Name="CarId" Type="int" Nullable="false" />
@@ -99,7 +99,7 @@
     <Key>
       <PropertyRef Name="RequestTypeId" />
     </Key>
-    <Property Name="RequestTypeId" Type="int" Nullable="false" />
+    <Property Name="RequestTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RequestTypeName" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="RescueEquipmentSet">
@@ -293,7 +293,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Operator_Employee">
-    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Operator" Type="Self.Operator" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Employee">
@@ -365,7 +367,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Rescuer_Employee1">
-    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Rescuer" Type="Self.Rescuer" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Employee">

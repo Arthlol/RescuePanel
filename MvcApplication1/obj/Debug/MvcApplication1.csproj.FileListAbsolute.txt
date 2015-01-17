@@ -167,6 +167,6 @@ C:\Users\Nikolay\Documents\Visual Studio 2013\Projects\RescuePanel\MvcApplicatio
 C:\Users\Nikolay\Documents\Visual Studio 2013\Projects\RescuePanel\MvcApplication1\bin\ru\System.Spatial.resources.dll
 C:\Users\Nikolay\Documents\Visual Studio 2013\Projects\RescuePanel\MvcApplication1\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Nikolay\Documents\Visual Studio 2013\Projects\RescuePanel\MvcApplication1\bin\zh-Hant\System.Spatial.resources.dll
-C:\Users\Nikolay\Documents\Visual Studio 2013\Projects\RescuePanel\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache
 C:\Users\Nikolay\Documents\Visual Studio 2013\Projects\RescuePanel\MvcApplication1\obj\Debug\MvcApplication1.dll
 C:\Users\Nikolay\Documents\Visual Studio 2013\Projects\RescuePanel\MvcApplication1\obj\Debug\MvcApplication1.pdb
+C:\Users\Nikolay\Documents\Visual Studio 2013\Projects\RescuePanel\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache

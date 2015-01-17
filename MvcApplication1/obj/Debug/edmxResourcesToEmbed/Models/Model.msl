@@ -40,17 +40,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="EmergencyTeamDeparture">
-      <EntityTypeMapping TypeName="RescueModelNamespace.EmergencyTeamDeparture">
-        <MappingFragment StoreEntitySet="EmergencyTeamDeparture">
-          <ScalarProperty Name="DepartureId" ColumnName="DepartureId" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
-          <ScalarProperty Name="CarId" ColumnName="CarId" />
-          <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Employee">
       <EntityTypeMapping TypeName="RescueModelNamespace.Employee">
         <MappingFragment StoreEntitySet="Employee">
@@ -233,5 +222,16 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="RescueModelNamespace.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="RescueModelNamespace.Store.sp_upgraddiagrams" />
+    <EntitySetMapping Name="EmergencyTeamDeparture">
+      <EntityTypeMapping TypeName="RescueModelNamespace.EmergencyTeamDeparture">
+        <MappingFragment StoreEntitySet="EmergencyTeamDeparture">
+          <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+          <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="EmergencyTeamDepartureId" ColumnName="EmergencyTeamDepartureId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

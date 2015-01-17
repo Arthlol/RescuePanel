@@ -1,0 +1,60 @@
+﻿@model MvcApplication1.Models.EmergencyTeamDeparture
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>EmergencyTeamDeparture</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RequestId, "Request")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("RequestId", String.Empty)
+            @Html.ValidationMessageFor(model => model.RequestId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyTeamId, "EmergencyTeam")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("EmergencyTeamId", String.Empty)
+            @Html.ValidationMessageFor(model => model.EmergencyTeamId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CarId, "Car")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CarId", String.Empty)
+            @Html.ValidationMessageFor(model => model.CarId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartureDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DepartureDate)
+            @Html.ValidationMessageFor(model => model.DepartureDate)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

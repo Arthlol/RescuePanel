@@ -1,0 +1,43 @@
+﻿@model MvcApplication1.Models.EmergencyTeamDeparture
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>EmergencyTeamDeparture</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Request.DeclarantName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Request.DeclarantName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmergencyTeam.EmergencyTeamName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmergencyTeam.EmergencyTeamName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Car.CarNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Car.CarNumber)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DepartureDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DepartureDate)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.EmergencyTeamDepartureId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

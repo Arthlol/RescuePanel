@@ -188,6 +188,7 @@
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\EmergencyTeamController.cs" />
+    <Compile Include="Controllers\EmergencyTeamDepartureController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OperatorController.cs" />
@@ -474,6 +475,11 @@
     <Content Include="Views\Request\Create.cshtml" />
     <Content Include="Views\Request\Edit.cshtml" />
     <Content Include="Views\Request\Delete.cshtml" />
+    <Content Include="Views\EmergencyTeamDeparture\Index.cshtml" />
+    <Content Include="Views\EmergencyTeamDeparture\Details.cshtml" />
+    <Content Include="Views\EmergencyTeamDeparture\Create.cshtml" />
+    <Content Include="Views\EmergencyTeamDeparture\Edit.cshtml" />
+    <Content Include="Views\EmergencyTeamDeparture\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

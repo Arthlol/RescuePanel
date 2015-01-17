@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MvcApplication1.Models.EmergencyTeamDeparture>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Request.DeclarantName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmergencyTeam.EmergencyTeamName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Car.CarNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Request.DeclarantName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmergencyTeam.EmergencyTeamName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Car.CarNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartureDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EmergencyTeamDepartureId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EmergencyTeamDepartureId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EmergencyTeamDepartureId })
+        </td>
+    </tr>
+}
+
+</table>

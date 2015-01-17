@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="RescueModelNamespace.Car" Width="1.5" PointX="12" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="RescueModelNamespace.Driver" Width="1.5" PointX="9.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="RescueModelNamespace.EmergencyTeam" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.EmergencyTeamDeparture" Width="1.5" PointX="14.25" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="RescueModelNamespace.Employee" Width="1.5" PointX="7.5" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RescueModelNamespace.JobTitle" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="RescueModelNamespace.Operator" Width="1.5" PointX="9.875" PointY="5.875" IsExpanded="true" />
@@ -25,13 +24,10 @@
         <EntityTypeShape EntityType="RescueModelNamespace.webpages_OAuthMembership" Width="1.5" PointX="5.125" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="RescueModelNamespace.webpages_Roles" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <AssociationConnector Association="RescueModelNamespace.FK_Administrator_UserInformation" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_Car" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.FK_RescueEquipmentSet_Car" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.FK_Driver_EmergencyTeam" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.FK_Driver_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_EmergencyTeam" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.FK_Rescuer_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_Request" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.FK_Employee_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.FK_Employee_UserInformation" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.FK_Operator_Employee" ManuallyRouted="false" />
@@ -41,6 +37,10 @@
         <AssociationConnector Association="RescueModelNamespace.FK_UserInformation_UserProfile" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.webpages_UsersInRoles" ManuallyRouted="false" />
         <AssociationConnector Association="RescueModelNamespace.FK_Rescuer_Employee1" />
+        <EntityTypeShape EntityType="RescueModelNamespace.EmergencyTeamDeparture" Width="1.5" PointX="14.2500005" PointY="4.37019856770833" />
+        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_Car" />
+        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_EmergencyTeam" />
+        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_Request" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

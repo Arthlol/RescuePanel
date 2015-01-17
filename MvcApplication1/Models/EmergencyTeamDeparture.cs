@@ -14,7 +14,7 @@ namespace MvcApplication1.Models
     
     public partial class EmergencyTeamDeparture
     {
-        public int DepartureId { get; set; }
+        public int EmergencyTeamDepartureId { get; set; }
         public int RequestId { get; set; }
         public int EmergencyTeamId { get; set; }
         public int CarId { get; set; }
