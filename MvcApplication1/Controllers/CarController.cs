@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
-
+using System.Data.SqlClient;
 namespace MvcApplication1.Controllers
 {
     public class CarController : Controller
@@ -20,7 +20,17 @@ namespace MvcApplication1.Controllers
         {
             return View(db.Car.ToList());
         }
-
+        [HttpPost]
+        public ActionResult Index(string NamePart)
+        {
+            List<Car> car;
+            if (NamePart != null)
+            {
+                car = db.Database.SqlQuery<Car>("GetCarByName @Name", new SqlParameter("@Name", NamePart)).ToList();
+            }
+            else car = db.Car.ToList();
+            return View(car);
+        }
         //
         // GET: /Car/Details/5
 

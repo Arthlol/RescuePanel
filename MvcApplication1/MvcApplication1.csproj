@@ -223,6 +223,9 @@
     <Compile Include="Models\GetCarByName_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetRequestHeadRescuerFIO_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetRequestOperatorFIO_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

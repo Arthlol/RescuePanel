@@ -68,15 +68,15 @@ namespace MvcApplication1.Controllers
                     
                     if (employee.JobTitleId == 1)
                     {
-                        return RedirectToAction("Create", "Operator");
+                        return RedirectToAction("Edit", "Operator", new { id = employee.UserId });
                     }
                     if (employee.JobTitleId == 2)
                     {
-                        return RedirectToAction("Create", "Driver");
+                        return RedirectToAction("Edit", "Driver", new { id = employee.UserId });
                     }
                     if (employee.JobTitleId == 3)
                     {
-                        return RedirectToAction("Create", "Rescuer");
+                        return RedirectToAction("Edit", "Rescuer", new { id = employee.UserId });
                     }
 
                 }

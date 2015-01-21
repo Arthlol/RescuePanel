@@ -556,6 +556,9 @@
     <FunctionImport Name="GetRequestOperatorFIO" IsComposable="true" ReturnType="Collection(RescueModel.GetRequestOperatorFIO_Result)">
       <Parameter Name="IdRequest" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="GetRequestHeadRescuerFIO" IsComposable="true" ReturnType="Collection(RescueModel.GetRequestHeadRescuerFIO_Result)">
+      <Parameter Name="IdRequest" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="GetCarByName_Result">
     <Property Type="Int32" Name="CarId" Nullable="false" />
@@ -576,6 +579,11 @@
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
   <ComplexType Name="GetRequestOperatorFIO_Result">
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecondName" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="GetRequestHeadRescuerFIO_Result">
     <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="SecondName" Nullable="true" MaxLength="50" />

@@ -92,7 +92,7 @@
             @Html.EditorFor(model => model.RequestReason)
             @Html.ValidationMessageFor(model => model.RequestReason)
         </div>
-
+        @if(User.IsInRole("Employee") ||(User.IsInRole("Administrator"))){
         <div class="editor-label">
             @Html.LabelFor(model => model.FakeRequest)
         </div>
@@ -100,7 +100,7 @@
             @Html.EditorFor(model => model.FakeRequest)
             @Html.ValidationMessageFor(model => model.FakeRequest)
         </div>
-
+        }
         <p>
             <input type="submit" value="Create" />
         </p>

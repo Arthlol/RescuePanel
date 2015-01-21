@@ -19,7 +19,7 @@
             @Html.LabelFor(model => model.UserId, "Operator")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("UserId", String.Empty)
+            @Html.DropDownList("UserId")
             @Html.ValidationMessageFor(model => model.UserId)
         </div>
 
@@ -27,7 +27,7 @@
             @Html.LabelFor(model => model.RequestStatusId, "RequestStatus")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("RequestStatusId", String.Empty)
+            @Html.DropDownList("RequestStatusId")
             @Html.ValidationMessageFor(model => model.RequestStatusId)
         </div>
 
@@ -35,7 +35,7 @@
             @Html.LabelFor(model => model.RequestTypeId, "RequestType")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("RequestTypeId", String.Empty)
+            @Html.DropDownList("RequestTypeId")
             @Html.ValidationMessageFor(model => model.RequestTypeId)
         </div>
 

@@ -42,7 +42,7 @@ namespace MvcApplication1.Controllers
         {
             ViewBag.CarId = new SelectList(db.Car, "CarId", "CarNumber");
             ViewBag.EmergencyTeamId = new SelectList(db.EmergencyTeam, "EmergencyTeamId", "EmergencyTeamName");
-            ViewBag.RequestId = new SelectList(db.Request, "RequestId", "DeclarantName");
+            ViewBag.RequestId = new SelectList(db.Request, "RequestId", "RequestId");
             return View();
         }
 

@@ -85,6 +85,18 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.FakeRequest)
     </div>
+    <div class="display-label">
+        @Html.Label("Оператор, принявший заявку")
+    </div>
+    <div class="display-field">
+        @Html.Display("OperatorFIO")
+    </div>
+    <div class="display-label">
+        @Html.Label("Координатор группы, обработавшей данную заявку")
+    </div>
+    <div class="display-field">
+        @Html.Display("HeadRescueFIO")
+    </div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.RequestId }) |

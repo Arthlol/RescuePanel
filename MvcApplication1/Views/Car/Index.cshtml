@@ -2,10 +2,17 @@
 
 @{
     ViewBag.Title = "Index";
+    string NamePart = null;
 }
 
 <h2>Index</h2>
-
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.TextBoxFor(m => NamePart)
+        <input type="submit" value="Найти" />
+    </div>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

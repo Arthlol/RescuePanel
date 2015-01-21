@@ -179,5 +179,15 @@ namespace MvcApplication1.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetRequestOperatorFIO_Result>("[RescueEntities].[GetRequestOperatorFIO](@IdRequest)", idRequestParameter);
         }
+    
+        [EdmFunction("RescueEntities", "GetRequestHeadRescuerFIO")]
+        public virtual IQueryable<GetRequestHeadRescuerFIO_Result> GetRequestHeadRescuerFIO(Nullable<int> idRequest)
+        {
+            var idRequestParameter = idRequest.HasValue ?
+                new ObjectParameter("IdRequest", idRequest) :
+                new ObjectParameter("IdRequest", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetRequestHeadRescuerFIO_Result>("[RescueEntities].[GetRequestHeadRescuerFIO](@IdRequest)", idRequestParameter);
+        }
     }
 }

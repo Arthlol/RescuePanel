@@ -17,11 +17,18 @@ namespace MvcApplication1.Controllers
         //
         // GET: /Request/
 
-        public ActionResult Index()
+        public ActionResult Index(int? Status)
         {
-            var request = db.Request.Include(r => r.Operator).Include(r => r.RequestStatus).Include(r => r.RequestType);
-            return View(request.ToList());
+
+            //var request = db.Request.Include(r => r.Operator).Include(r => r.RequestStatus).Include(r => r.RequestType);
+            IEnumerable<Request> list = db.Request.Include(r => r.Operator).Include(r => r.RequestStatus).Include(r => r.RequestType);
+
+            if (Status == null) list = db.Request.Include(r => r.Operator).Include(r => r.RequestStatus).Include(r => r.RequestType);
+            else if((Status == 1) || (Status == 2) || (Status == 3)) list = list.Where(z => z.RequestStatusId == Status);
+
+            return View(list.ToList());
         }
+
 
         //
         // GET: /Request/Details/5
@@ -33,6 +40,19 @@ namespace MvcApplication1.Controllers
             {
                 return HttpNotFound();
             }
+            var RequestOperator = db.Database.SqlQuery<GetRequestOperatorFIO_Result>("SELECT * FROM [dbo].[GetRequestOperatorFIO](N'" + request.RequestId.ToString() + "')");
+            string OperatorFIO = RequestOperator.FirstOrDefault().LastName + " " + RequestOperator.FirstOrDefault().FirstName + " " + RequestOperator.FirstOrDefault().SecondName;
+
+            var HeadRescue = db.Database.SqlQuery<GetRequestHeadRescuerFIO_Result>("SELECT * FROM [dbo].[GetRequestHeadRescuerFIO](N'" + request.RequestId.ToString() + "')");
+            string HeadRescueFIO = "";
+            if (HeadRescue.Count() > 0)
+            {
+                HeadRescueFIO = HeadRescue.FirstOrDefault().LastName + " " + HeadRescue.FirstOrDefault().FirstName + " " + HeadRescue.FirstOrDefault().SecondName;
+            }
+
+            if (String.IsNullOrWhiteSpace(HeadRescueFIO)) HeadRescueFIO = "Данная заявка ещё не была обработана или является ложной";
+            ViewBag.OperatorFIO = OperatorFIO;
+            ViewBag.HeadRescueFIO = HeadRescueFIO;
             return View(request);
         }
 

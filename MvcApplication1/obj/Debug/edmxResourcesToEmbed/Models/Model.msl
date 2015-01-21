@@ -262,5 +262,14 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetRequestHeadRescuerFIO" FunctionName="RescueModel.Store.GetRequestHeadRescuerFIO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="RescueModel.GetRequestHeadRescuerFIO_Result">
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
