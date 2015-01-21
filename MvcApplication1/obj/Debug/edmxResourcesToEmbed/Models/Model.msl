@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="RescueModelNamespaceStoreContainer" CdmEntityContainer="RescueEntities">
+  <EntityContainerMapping StorageEntityContainer="RescueModelStoreContainer" CdmEntityContainer="RescueEntities">
     <EntitySetMapping Name="Administrator">
-      <EntityTypeMapping TypeName="RescueModelNamespace.Administrator">
+      <EntityTypeMapping TypeName="RescueModel.Administrator">
         <MappingFragment StoreEntitySet="Administrator">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
@@ -10,7 +10,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Car">
-      <EntityTypeMapping TypeName="RescueModelNamespace.Car">
+      <EntityTypeMapping TypeName="RescueModel.Car">
         <MappingFragment StoreEntitySet="Car">
           <ScalarProperty Name="CarId" ColumnName="CarId" />
           <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
@@ -21,7 +21,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Driver">
-      <EntityTypeMapping TypeName="RescueModelNamespace.Driver">
+      <EntityTypeMapping TypeName="RescueModel.Driver">
         <MappingFragment StoreEntitySet="Driver">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
@@ -32,16 +32,27 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="EmergencyTeam">
-      <EntityTypeMapping TypeName="RescueModelNamespace.EmergencyTeam">
+      <EntityTypeMapping TypeName="RescueModel.EmergencyTeam">
         <MappingFragment StoreEntitySet="EmergencyTeam">
-          <ScalarProperty Name="EmergencyTeamName" ColumnName="EmergencyTeamName" />
           <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="EmergencyTeamName" ColumnName="EmergencyTeamName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmergencyTeamDeparture">
+      <EntityTypeMapping TypeName="RescueModel.EmergencyTeamDeparture">
+        <MappingFragment StoreEntitySet="EmergencyTeamDeparture">
+          <ScalarProperty Name="EmergencyTeamDepartureId" ColumnName="EmergencyTeamDepartureId" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+          <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Employee">
-      <EntityTypeMapping TypeName="RescueModelNamespace.Employee">
+      <EntityTypeMapping TypeName="RescueModel.Employee">
         <MappingFragment StoreEntitySet="Employee">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
@@ -51,7 +62,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="JobTitle">
-      <EntityTypeMapping TypeName="RescueModelNamespace.JobTitle">
+      <EntityTypeMapping TypeName="RescueModel.JobTitle">
         <MappingFragment StoreEntitySet="JobTitle">
           <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
           <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
@@ -60,7 +71,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Operator">
-      <EntityTypeMapping TypeName="RescueModelNamespace.Operator">
+      <EntityTypeMapping TypeName="RescueModel.Operator">
         <MappingFragment StoreEntitySet="Operator">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="WorkShift" ColumnName="WorkShift" />
@@ -70,7 +81,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Request">
-      <EntityTypeMapping TypeName="RescueModelNamespace.Request">
+      <EntityTypeMapping TypeName="RescueModel.Request">
         <MappingFragment StoreEntitySet="Request">
           <ScalarProperty Name="RequestId" ColumnName="RequestId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -88,7 +99,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RequestStatus">
-      <EntityTypeMapping TypeName="RescueModelNamespace.RequestStatus">
+      <EntityTypeMapping TypeName="RescueModel.RequestStatus">
         <MappingFragment StoreEntitySet="RequestStatus">
           <ScalarProperty Name="RequestStatusId" ColumnName="RequestStatusId" />
           <ScalarProperty Name="RequestStatusName" ColumnName="RequestStatusName" />
@@ -96,7 +107,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RequestType">
-      <EntityTypeMapping TypeName="RescueModelNamespace.RequestType">
+      <EntityTypeMapping TypeName="RescueModel.RequestType">
         <MappingFragment StoreEntitySet="RequestType">
           <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
           <ScalarProperty Name="RequestTypeName" ColumnName="RequestTypeName" />
@@ -104,7 +115,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RescueEquipmentSet">
-      <EntityTypeMapping TypeName="RescueModelNamespace.RescueEquipmentSet">
+      <EntityTypeMapping TypeName="RescueModel.RescueEquipmentSet">
         <MappingFragment StoreEntitySet="RescueEquipmentSet">
           <ScalarProperty Name="RescueEquipmentSetId" ColumnName="RescueEquipmentSetId" />
           <ScalarProperty Name="CarId" ColumnName="CarId" />
@@ -116,7 +127,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Rescuer">
-      <EntityTypeMapping TypeName="RescueModelNamespace.Rescuer">
+      <EntityTypeMapping TypeName="RescueModel.Rescuer">
         <MappingFragment StoreEntitySet="Rescuer">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
@@ -126,7 +137,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="RescueModelNamespace.sysdiagrams">
+      <EntityTypeMapping TypeName="RescueModel.sysdiagrams">
         <MappingFragment StoreEntitySet="sysdiagrams">
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -137,7 +148,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserInformation">
-      <EntityTypeMapping TypeName="RescueModelNamespace.UserInformation">
+      <EntityTypeMapping TypeName="RescueModel.UserInformation">
         <MappingFragment StoreEntitySet="UserInformation">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -149,7 +160,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserProfile">
-      <EntityTypeMapping TypeName="RescueModelNamespace.UserProfile">
+      <EntityTypeMapping TypeName="RescueModel.UserProfile">
         <MappingFragment StoreEntitySet="UserProfile">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -157,7 +168,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="webpages_Membership">
-      <EntityTypeMapping TypeName="RescueModelNamespace.webpages_Membership">
+      <EntityTypeMapping TypeName="RescueModel.webpages_Membership">
         <MappingFragment StoreEntitySet="webpages_Membership">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -174,7 +185,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="webpages_OAuthMembership">
-      <EntityTypeMapping TypeName="RescueModelNamespace.webpages_OAuthMembership">
+      <EntityTypeMapping TypeName="RescueModel.webpages_OAuthMembership">
         <MappingFragment StoreEntitySet="webpages_OAuthMembership">
           <ScalarProperty Name="Provider" ColumnName="Provider" />
           <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
@@ -183,14 +194,14 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="webpages_Roles">
-      <EntityTypeMapping TypeName="RescueModelNamespace.webpages_Roles">
+      <EntityTypeMapping TypeName="RescueModel.webpages_Roles">
         <MappingFragment StoreEntitySet="webpages_Roles">
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="RoleName" ColumnName="RoleName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="RescueModelNamespace.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+    <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="RescueModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
       <EndProperty Name="webpages_Roles">
         <ScalarProperty Name="RoleId" ColumnName="RoleId" />
       </EndProperty>
@@ -198,20 +209,40 @@
         <ScalarProperty Name="UserId" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="RescueModelNamespace.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="RescueModelNamespace.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="RescueModelNamespace.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="RescueModelNamespace.Store.sp_helpdiagramdefinition">
+    <FunctionImportMapping FunctionName="RescueModel.Store.GetTeamDriverFIO" FunctionImportName="GetTeamDriverFIO">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="RescueModelNamespace.sp_helpdiagramdefinition_Result">
+        <ComplexTypeMapping TypeName="RescueModel.GetTeamDriverFIO_Result">
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetCarByName" FunctionName="RescueModel.Store.GetCarByName">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="RescueModel.GetCarByName_Result">
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+          <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
+          <ScalarProperty Name="CarBrand" ColumnName="CarBrand" />
+          <ScalarProperty Name="CarModel" ColumnName="CarModel" />
+          <ScalarProperty Name="CarCondition" ColumnName="CarCondition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="RescueModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="RescueModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="RescueModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="RescueModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="RescueModel.sp_helpdiagramdefinition_Result">
           <ScalarProperty Name="version" ColumnName="version" />
           <ScalarProperty Name="definition" ColumnName="definition" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="RescueModelNamespace.Store.sp_helpdiagrams">
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="RescueModel.Store.sp_helpdiagrams">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="RescueModelNamespace.sp_helpdiagrams_Result">
+        <ComplexTypeMapping TypeName="RescueModel.sp_helpdiagrams_Result">
           <ScalarProperty Name="Database" ColumnName="Database" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -220,18 +251,16 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="RescueModelNamespace.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="RescueModelNamespace.Store.sp_upgraddiagrams" />
-    <EntitySetMapping Name="EmergencyTeamDeparture">
-      <EntityTypeMapping TypeName="RescueModelNamespace.EmergencyTeamDeparture">
-        <MappingFragment StoreEntitySet="EmergencyTeamDeparture">
-          <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
-          <ScalarProperty Name="CarId" ColumnName="CarId" />
-          <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="EmergencyTeamDepartureId" ColumnName="EmergencyTeamDepartureId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="RescueModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="RescueModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="GetRequestOperatorFIO" FunctionName="RescueModel.Store.GetRequestOperatorFIO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="RescueModel.GetRequestOperatorFIO_Result">
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

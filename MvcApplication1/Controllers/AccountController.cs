@@ -44,7 +44,7 @@ namespace MvcApplication1.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "Пароль или имя пользователя введены неверно");
             return View(model);
         }
 
@@ -84,20 +84,20 @@ namespace MvcApplication1.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     db.SaveChanges();
-                    var uProfile = db.UserProfile.First(x => x.UserName == model.UserName);
-                    UserInformation ui = new UserInformation()
-                    {
-                        UserProfile = uProfile,
-                        UserId = uProfile.UserId,
-                        BirthDate = DateTime.UtcNow,
-                        Name = "Name",
-                        MiddleName = "MiddleName",
-                        LastName = "LastName",
-                        PersonalPhone = "PersonalPhone"
-                    };
-                    db.UserInformation.Add(ui);
+                   // var uProfile = db.UserProfile.First(x => x.UserName == model.UserName);
+                   //UserInformation ui = new UserInformation()
+                   // {
+                   //     UserProfile = uProfile,
+                   //     UserId = uProfile.UserId,
+                   //     BirthDate = DateTime.UtcNow,
+                   //     Name = "Name",
+                   //     MiddleName = "MiddleName",
+                   //     LastName = "LastName",
+                   //     PersonalPhone = "PersonalPhone"
+                   // };
+                   // db.UserInformation.Add(ui);
                     db.SaveChanges();
-                //    WebSecurity.Login(model.UserName, model.Password);
+                    Roles.AddUserToRole(model.UserName, "User");
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -145,8 +145,8 @@ namespace MvcApplication1.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                message == ManageMessageId.ChangePasswordSuccess ? "Ваш пароль был изменен"
+                : message == ManageMessageId.SetPasswordSuccess ? "Ваш пароль был задан"
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
@@ -185,7 +185,7 @@ namespace MvcApplication1.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                        ModelState.AddModelError("", "Текущий или новый пароль неверны");
                     }
                 }
             }
@@ -208,7 +208,7 @@ namespace MvcApplication1.Controllers
                     }
                     catch (Exception)
                     {
-                        ModelState.AddModelError("", String.Format("Unable to create local account. An account with the name \"{0}\" may already exist.", User.Identity.Name));
+                        ModelState.AddModelError("", String.Format("Невозможно создать аккаунт, \"{0}\" уже существует", User.Identity.Name));
                     }
                 }
             }

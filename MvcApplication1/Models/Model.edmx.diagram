@@ -4,43 +4,43 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3dd42e090eb7487396dfba0db7af9b11" Name="Diagram1" ZoomLevel="80" ShowGrid="false" SnapToGrid="false">
-        <EntityTypeShape EntityType="RescueModelNamespace.Administrator" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.Car" Width="1.5" PointX="12" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.Driver" Width="1.5" PointX="9.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.EmergencyTeam" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.Employee" Width="1.5" PointX="7.5" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.JobTitle" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.Operator" Width="1.5" PointX="9.875" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.Request" Width="1.5" PointX="12" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.RequestStatus" Width="1.5" PointX="9.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.RequestType" Width="1.5" PointX="9.75" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.RescueEquipmentSet" Width="1.5" PointX="14.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.Rescuer" Width="1.5" PointX="9.75" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.UserInformation" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.UserProfile" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.webpages_Membership" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.webpages_OAuthMembership" Width="1.5" PointX="5.125" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RescueModelNamespace.webpages_Roles" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Administrator_UserInformation" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_RescueEquipmentSet_Car" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Driver_EmergencyTeam" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Driver_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Rescuer_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Employee_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Employee_UserInformation" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Operator_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Request_Operator" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Request_RequestStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Request_RequestType" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_UserInformation_UserProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.webpages_UsersInRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="RescueModelNamespace.FK_Rescuer_Employee1" />
-        <EntityTypeShape EntityType="RescueModelNamespace.EmergencyTeamDeparture" Width="1.5" PointX="14.2500005" PointY="4.37019856770833" />
-        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_Car" />
-        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_EmergencyTeam" />
-        <AssociationConnector Association="RescueModelNamespace.FK_EmergencyTeamDeparture_Request" />
+      <Diagram DiagramId="4a58f774be3942509249855f6f21da0a" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="RescueModel.Administrator" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.Car" Width="1.5" PointX="12" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.Driver" Width="1.5" PointX="9.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.EmergencyTeam" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.EmergencyTeamDeparture" Width="1.5" PointX="14.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.Employee" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.JobTitle" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.Operator" Width="1.5" PointX="9.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.Request" Width="1.5" PointX="12" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.RequestStatus" Width="1.5" PointX="9.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.RequestType" Width="1.5" PointX="9.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.RescueEquipmentSet" Width="1.5" PointX="14.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.Rescuer" Width="1.5" PointX="9.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.UserInformation" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.UserProfile" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.webpages_Membership" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.webpages_OAuthMembership" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RescueModel.webpages_Roles" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <AssociationConnector Association="RescueModel.FK_Administrator_UserInformation" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_EmergencyTeamDeparture_Car" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_RescueEquipmentSet_Car" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Driver_EmergencyTeam" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Driver_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_EmergencyTeamDeparture_EmergencyTeam" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Rescuer_EmergencyTeam" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_EmergencyTeamDeparture_Request" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Employee_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Employee_UserInformation" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Operator_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Rescuer_Employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Request_Operator" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Request_RequestStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_Request_RequestType" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.FK_UserInformation_UserProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="RescueModel.webpages_UsersInRoles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

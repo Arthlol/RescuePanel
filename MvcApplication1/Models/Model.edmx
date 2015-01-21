@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="RescueModelNamespace.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RescueModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrator">
           <Key>
             <PropertyRef Name="UserId" />
@@ -112,7 +112,7 @@
             <PropertyRef Name="RescueEquipmentSetId" />
           </Key>
           <Property Name="RescueEquipmentSetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CarId" Type="int" Nullable="false" />
+          <Property Name="CarId" Type="int" />
           <Property Name="RescueEquipmentCount" Type="int" />
           <Property Name="RescueEquipmentCondition" Type="nvarchar" MaxLength="50" />
           <Property Name="RescueEquipmentDescription" Type="nvarchar" MaxLength="50" />
@@ -348,7 +348,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RescueEquipmentSet_Car">
-          <End Role="Car" Type="Self.Car" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="0..1" />
           <End Role="RescueEquipmentSet" Type="Self.RescueEquipmentSet" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Car">
@@ -426,6 +426,33 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetCarByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetRequestOperatorFIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRequest" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+                <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+                <Property Name="SecondName" Type="nvarchar" MaxLength="50" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetTeamDriverFIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TeamName" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+                <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+                <Property Name="SecondName" Type="nvarchar" MaxLength="50" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -456,7 +483,7 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="RescueModelNamespaceStoreContainer">
+        <EntityContainer Name="RescueModelStoreContainer">
           <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
@@ -553,7 +580,12 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="RescueModelNamespace" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="RescueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="GetTeamDriverFIO_Result">
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SecondName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </ComplexType>
         <EntityType Name="Administrator">
           <Key>
             <PropertyRef Name="UserId" />
@@ -571,8 +603,8 @@
           <Property Name="CarBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CarModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CarCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmergencyTeamDeparture" Relationship="Self.FK_EmergencyTeamDeparture_Car" FromRole="Car" ToRole="EmergencyTeamDeparture" />
           <NavigationProperty Name="RescueEquipmentSet" Relationship="Self.FK_RescueEquipmentSet_Car" FromRole="Car" ToRole="RescueEquipmentSet" />
-          <NavigationProperty Name="EmergencyTeamDeparture" Relationship="RescueModelNamespace.FK_EmergencyTeamDeparture_Car" FromRole="Car" ToRole="EmergencyTeamDeparture" />
         </EntityType>
         <EntityType Name="Driver">
           <Key>
@@ -592,10 +624,23 @@
           </Key>
           <Property Name="EmergencyTeamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreateDate" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="Driver" Relationship="Self.FK_Driver_EmergencyTeam" FromRole="EmergencyTeam" ToRole="Driver" />
-          <NavigationProperty Name="Rescuer" Relationship="Self.FK_Rescuer_Employee" FromRole="EmergencyTeam" ToRole="Rescuer" />
           <Property Name="EmergencyTeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="EmergencyTeamDeparture" Relationship="RescueModelNamespace.FK_EmergencyTeamDeparture_EmergencyTeam" FromRole="EmergencyTeam" ToRole="EmergencyTeamDeparture" />
+          <NavigationProperty Name="Driver" Relationship="Self.FK_Driver_EmergencyTeam" FromRole="EmergencyTeam" ToRole="Driver" />
+          <NavigationProperty Name="EmergencyTeamDeparture" Relationship="Self.FK_EmergencyTeamDeparture_EmergencyTeam" FromRole="EmergencyTeam" ToRole="EmergencyTeamDeparture" />
+          <NavigationProperty Name="Rescuer" Relationship="Self.FK_Rescuer_EmergencyTeam" FromRole="EmergencyTeam" ToRole="Rescuer" />
+        </EntityType>
+        <EntityType Name="EmergencyTeamDeparture">
+          <Key>
+            <PropertyRef Name="EmergencyTeamDepartureId" />
+          </Key>
+          <Property Name="EmergencyTeamDepartureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="Int32" Nullable="false" />
+          <Property Name="EmergencyTeamId" Type="Int32" Nullable="false" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <Property Name="DepartureDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Car" Relationship="Self.FK_EmergencyTeamDeparture_Car" FromRole="EmergencyTeamDeparture" ToRole="Car" />
+          <NavigationProperty Name="EmergencyTeam" Relationship="Self.FK_EmergencyTeamDeparture_EmergencyTeam" FromRole="EmergencyTeamDeparture" ToRole="EmergencyTeam" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_EmergencyTeamDeparture_Request" FromRole="EmergencyTeamDeparture" ToRole="Request" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -609,7 +654,7 @@
           <NavigationProperty Name="JobTitle" Relationship="Self.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
           <NavigationProperty Name="UserInformation" Relationship="Self.FK_Employee_UserInformation" FromRole="Employee" ToRole="UserInformation" />
           <NavigationProperty Name="Operator" Relationship="Self.FK_Operator_Employee" FromRole="Employee" ToRole="Operator" />
-          <NavigationProperty Name="Rescuer" Relationship="RescueModelNamespace.FK_Rescuer_Employee1" FromRole="Employee" ToRole="Rescuer" />
+          <NavigationProperty Name="Rescuer" Relationship="Self.FK_Rescuer_Employee1" FromRole="Employee" ToRole="Rescuer" />
         </EntityType>
         <EntityType Name="JobTitle">
           <Key>
@@ -647,10 +692,10 @@
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RequestReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FakeRequest" Type="Boolean" />
+          <NavigationProperty Name="EmergencyTeamDeparture" Relationship="Self.FK_EmergencyTeamDeparture_Request" FromRole="Request" ToRole="EmergencyTeamDeparture" />
           <NavigationProperty Name="Operator" Relationship="Self.FK_Request_Operator" FromRole="Request" ToRole="Operator" />
           <NavigationProperty Name="RequestStatus" Relationship="Self.FK_Request_RequestStatus" FromRole="Request" ToRole="RequestStatus" />
           <NavigationProperty Name="RequestType" Relationship="Self.FK_Request_RequestType" FromRole="Request" ToRole="RequestType" />
-          <NavigationProperty Name="EmergencyTeamDeparture" Relationship="RescueModelNamespace.FK_EmergencyTeamDeparture_Request" FromRole="Request" ToRole="EmergencyTeamDeparture" />
         </EntityType>
         <EntityType Name="RequestStatus">
           <Key>
@@ -664,7 +709,7 @@
           <Key>
             <PropertyRef Name="RequestTypeId" />
           </Key>
-          <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+          <Property Name="RequestTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Request" Relationship="Self.FK_Request_RequestType" FromRole="RequestType" ToRole="Request" />
         </EntityType>
@@ -673,7 +718,7 @@
             <PropertyRef Name="RescueEquipmentSetId" />
           </Key>
           <Property Name="RescueEquipmentSetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <Property Name="CarId" Type="Int32" />
           <Property Name="RescueEquipmentCount" Type="Int32" />
           <Property Name="RescueEquipmentCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RescueEquipmentDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -688,8 +733,8 @@
           <Property Name="EmergencyTeamId" Type="Int32" Nullable="false" />
           <Property Name="HeadOfGroup" Type="Boolean" />
           <Property Name="MedicalBoardPassageDate" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="EmergencyTeam" Relationship="Self.FK_Rescuer_Employee" FromRole="Rescuer" ToRole="EmergencyTeam" />
-          <NavigationProperty Name="Employee" Relationship="RescueModelNamespace.FK_Rescuer_Employee1" FromRole="Rescuer" ToRole="Employee" />
+          <NavigationProperty Name="EmergencyTeam" Relationship="Self.FK_Rescuer_EmergencyTeam" FromRole="Rescuer" ToRole="EmergencyTeam" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Rescuer_Employee1" FromRole="Rescuer" ToRole="Employee" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -758,8 +803,10 @@
           <NavigationProperty Name="UserProfile" Relationship="Self.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
         </EntityType>
         <Association Name="FK_Administrator_UserInformation">
-          <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="1" ></End>
-          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" ></End>
+          <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="UserInformation">
               <PropertyRef Name="UserId" />
@@ -769,8 +816,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RescueEquipmentSet_Car">
+        <Association Name="FK_EmergencyTeamDeparture_Car">
           <End Role="Car" Type="Self.Car" Multiplicity="1" />
+          <End Role="EmergencyTeamDeparture" Type="Self.EmergencyTeamDeparture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="CarId" />
+            </Principal>
+            <Dependent Role="EmergencyTeamDeparture">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RescueEquipmentSet_Car">
+          <End Role="Car" Type="Self.Car" Multiplicity="0..1" />
           <End Role="RescueEquipmentSet" Type="Self.RescueEquipmentSet" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Car">
@@ -805,7 +864,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Rescuer_Employee">
+        <Association Name="FK_EmergencyTeamDeparture_EmergencyTeam">
+          <End Role="EmergencyTeam" Type="Self.EmergencyTeam" Multiplicity="1" />
+          <End Role="EmergencyTeamDeparture" Type="Self.EmergencyTeamDeparture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmergencyTeam">
+              <PropertyRef Name="EmergencyTeamId" />
+            </Principal>
+            <Dependent Role="EmergencyTeamDeparture">
+              <PropertyRef Name="EmergencyTeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rescuer_EmergencyTeam">
           <End Role="EmergencyTeam" Type="Self.EmergencyTeam" Multiplicity="1" />
           <End Role="Rescuer" Type="Self.Rescuer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -817,8 +888,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmergencyTeamDeparture_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="EmergencyTeamDeparture" Type="Self.EmergencyTeamDeparture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="EmergencyTeamDeparture">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_JobTitle">
-          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="JobTitle">
@@ -830,7 +915,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Employee_UserInformation">
-          <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="1" />
+          <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="UserInformation">
@@ -842,13 +929,29 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Operator_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Operator" Type="Self.Operator" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="Operator">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rescuer_Employee1">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rescuer" Type="Self.Rescuer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Rescuer">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -890,8 +993,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserInformation_UserProfile">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" ></End>
-          <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="0..1" ></End>
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
               <PropertyRef Name="UserId" />
@@ -910,6 +1015,7 @@
           <EntitySet Name="Car" EntityType="Self.Car" />
           <EntitySet Name="Driver" EntityType="Self.Driver" />
           <EntitySet Name="EmergencyTeam" EntityType="Self.EmergencyTeam" />
+          <EntitySet Name="EmergencyTeamDeparture" EntityType="Self.EmergencyTeamDeparture" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
           <EntitySet Name="JobTitle" EntityType="Self.JobTitle" />
           <EntitySet Name="Operator" EntityType="Self.Operator" />
@@ -928,6 +1034,10 @@
             <End Role="UserInformation" EntitySet="UserInformation" />
             <End Role="Administrator" EntitySet="Administrator" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmergencyTeamDeparture_Car" Association="Self.FK_EmergencyTeamDeparture_Car">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDeparture" />
+          </AssociationSet>
           <AssociationSet Name="FK_RescueEquipmentSet_Car" Association="Self.FK_RescueEquipmentSet_Car">
             <End Role="Car" EntitySet="Car" />
             <End Role="RescueEquipmentSet" EntitySet="RescueEquipmentSet" />
@@ -940,9 +1050,17 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Driver" EntitySet="Driver" />
           </AssociationSet>
-          <AssociationSet Name="FK_Rescuer_Employee" Association="Self.FK_Rescuer_Employee">
+          <AssociationSet Name="FK_EmergencyTeamDeparture_EmergencyTeam" Association="Self.FK_EmergencyTeamDeparture_EmergencyTeam">
+            <End Role="EmergencyTeam" EntitySet="EmergencyTeam" />
+            <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDeparture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rescuer_EmergencyTeam" Association="Self.FK_Rescuer_EmergencyTeam">
             <End Role="EmergencyTeam" EntitySet="EmergencyTeam" />
             <End Role="Rescuer" EntitySet="Rescuer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmergencyTeamDeparture_Request" Association="Self.FK_EmergencyTeamDeparture_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDeparture" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitle" />
@@ -955,6 +1073,10 @@
           <AssociationSet Name="FK_Operator_Employee" Association="Self.FK_Operator_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Operator" EntitySet="Operator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rescuer_Employee1" Association="Self.FK_Rescuer_Employee1">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Rescuer" EntitySet="Rescuer" />
           </AssociationSet>
           <AssociationSet Name="FK_Request_Operator" Association="Self.FK_Request_Operator">
             <End Role="Operator" EntitySet="Operator" />
@@ -976,54 +1098,53 @@
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="UserProfile" EntitySet="UserProfile" />
           </AssociationSet>
+          <FunctionImport Name="GetTeamDriverFIO" ReturnType="Collection(RescueModel.GetTeamDriverFIO_Result)" IsComposable="true">
+          <Parameter Name="TeamName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCarByName" ReturnType="Collection(RescueModel.GetCarByName_Result)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
+          <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
             <Parameter Name="version" Mode="In" Type="Int32" />
             <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
+          <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
             <Parameter Name="version" Mode="In" Type="Int32" />
             <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
+          <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(RescueModelNamespace.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(RescueModel.sp_helpdiagramdefinition_Result)">
+          <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(RescueModelNamespace.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(RescueModel.sp_helpdiagrams_Result)">
+          <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
+          <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <AssociationSet Name="FK_Rescuer_Employee1" Association="RescueModelNamespace.FK_Rescuer_Employee1">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Rescuer" EntitySet="Rescuer" />
-          </AssociationSet>
-          <EntitySet Name="EmergencyTeamDeparture" EntityType="RescueModelNamespace.EmergencyTeamDeparture" />
-          <AssociationSet Name="FK_EmergencyTeamDeparture_Car" Association="RescueModelNamespace.FK_EmergencyTeamDeparture_Car">
-            <End Role="Car" EntitySet="Car" />
-            <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDeparture" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmergencyTeamDeparture_EmergencyTeam" Association="RescueModelNamespace.FK_EmergencyTeamDeparture_EmergencyTeam">
-            <End Role="EmergencyTeam" EntitySet="EmergencyTeam" />
-            <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDeparture" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmergencyTeamDeparture_Request" Association="RescueModelNamespace.FK_EmergencyTeamDeparture_Request">
-            <End Role="Request" EntitySet="Request" />
-            <End Role="EmergencyTeamDeparture" EntitySet="EmergencyTeamDeparture" />
-          </AssociationSet>
+          <FunctionImport Name="GetRequestOperatorFIO" IsComposable="true" ReturnType="Collection(RescueModel.GetRequestOperatorFIO_Result)">
+          <Parameter Name="IdRequest" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="GetCarByName_Result">
+          <Property Type="Int32" Name="CarId" Nullable="false" />
+          <Property Type="String" Name="CarNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CarBrand" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CarModel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CarCondition" Nullable="true" MaxLength="50" />
+        </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -1035,75 +1156,19 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <Association Name="FK_Rescuer_Employee1">
-          <End Type="RescueModelNamespace.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="RescueModelNamespace.Rescuer" Role="Rescuer" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Rescuer">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="EmergencyTeamDeparture">
-          <Key>
-            <PropertyRef Name="EmergencyTeamDepartureId" />
-          </Key>
-          <Property Name="EmergencyTeamDepartureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestId" Type="Int32" Nullable="false" />
-          <Property Name="EmergencyTeamId" Type="Int32" Nullable="false" />
-          <Property Name="CarId" Type="Int32" Nullable="false" />
-          <Property Name="DepartureDate" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="Car" Relationship="RescueModelNamespace.FK_EmergencyTeamDeparture_Car" FromRole="EmergencyTeamDeparture" ToRole="Car" />
-          <NavigationProperty Name="EmergencyTeam" Relationship="RescueModelNamespace.FK_EmergencyTeamDeparture_EmergencyTeam" FromRole="EmergencyTeamDeparture" ToRole="EmergencyTeam" />
-          <NavigationProperty Name="Request" Relationship="RescueModelNamespace.FK_EmergencyTeamDeparture_Request" FromRole="EmergencyTeamDeparture" ToRole="Request" />
-        </EntityType>
-        <Association Name="FK_EmergencyTeamDeparture_Car">
-          <End Type="RescueModelNamespace.Car" Role="Car" Multiplicity="1" />
-          <End Type="RescueModelNamespace.EmergencyTeamDeparture" Role="EmergencyTeamDeparture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Car">
-              <PropertyRef Name="CarId" />
-            </Principal>
-            <Dependent Role="EmergencyTeamDeparture">
-              <PropertyRef Name="CarId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmergencyTeamDeparture_EmergencyTeam">
-          <End Type="RescueModelNamespace.EmergencyTeam" Role="EmergencyTeam" Multiplicity="1" />
-          <End Type="RescueModelNamespace.EmergencyTeamDeparture" Role="EmergencyTeamDeparture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmergencyTeam">
-              <PropertyRef Name="EmergencyTeamId" />
-            </Principal>
-            <Dependent Role="EmergencyTeamDeparture">
-              <PropertyRef Name="EmergencyTeamId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmergencyTeamDeparture_Request">
-          <End Type="RescueModelNamespace.Request" Role="Request" Multiplicity="1" />
-          <End Type="RescueModelNamespace.EmergencyTeamDeparture" Role="EmergencyTeamDeparture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Request">
-              <PropertyRef Name="RequestId" />
-            </Principal>
-            <Dependent Role="EmergencyTeamDeparture">
-              <PropertyRef Name="RequestId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <ComplexType Name="GetRequestOperatorFIO_Result">
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecondName" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RescueModelNamespaceStoreContainer" CdmEntityContainer="RescueEntities">
+        <EntityContainerMapping StorageEntityContainer="RescueModelStoreContainer" CdmEntityContainer="RescueEntities">
           <EntitySetMapping Name="Administrator">
-            <EntityTypeMapping TypeName="RescueModelNamespace.Administrator">
+            <EntityTypeMapping TypeName="RescueModel.Administrator">
               <MappingFragment StoreEntitySet="Administrator">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
@@ -1111,7 +1176,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Car">
-            <EntityTypeMapping TypeName="RescueModelNamespace.Car">
+            <EntityTypeMapping TypeName="RescueModel.Car">
               <MappingFragment StoreEntitySet="Car">
                 <ScalarProperty Name="CarId" ColumnName="CarId" />
                 <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
@@ -1122,7 +1187,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Driver">
-            <EntityTypeMapping TypeName="RescueModelNamespace.Driver">
+            <EntityTypeMapping TypeName="RescueModel.Driver">
               <MappingFragment StoreEntitySet="Driver">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
@@ -1133,16 +1198,27 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmergencyTeam">
-            <EntityTypeMapping TypeName="RescueModelNamespace.EmergencyTeam">
+            <EntityTypeMapping TypeName="RescueModel.EmergencyTeam">
               <MappingFragment StoreEntitySet="EmergencyTeam">
-                <ScalarProperty Name="EmergencyTeamName" ColumnName="EmergencyTeamName" />
                 <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="EmergencyTeamName" ColumnName="EmergencyTeamName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmergencyTeamDeparture">
+            <EntityTypeMapping TypeName="RescueModel.EmergencyTeamDeparture">
+              <MappingFragment StoreEntitySet="EmergencyTeamDeparture">
+                <ScalarProperty Name="EmergencyTeamDepartureId" ColumnName="EmergencyTeamDepartureId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee">
-            <EntityTypeMapping TypeName="RescueModelNamespace.Employee">
+            <EntityTypeMapping TypeName="RescueModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
@@ -1152,7 +1228,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobTitle">
-            <EntityTypeMapping TypeName="RescueModelNamespace.JobTitle">
+            <EntityTypeMapping TypeName="RescueModel.JobTitle">
               <MappingFragment StoreEntitySet="JobTitle">
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
@@ -1161,7 +1237,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Operator">
-            <EntityTypeMapping TypeName="RescueModelNamespace.Operator">
+            <EntityTypeMapping TypeName="RescueModel.Operator">
               <MappingFragment StoreEntitySet="Operator">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="WorkShift" ColumnName="WorkShift" />
@@ -1171,7 +1247,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Request">
-            <EntityTypeMapping TypeName="RescueModelNamespace.Request">
+            <EntityTypeMapping TypeName="RescueModel.Request">
               <MappingFragment StoreEntitySet="Request">
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1189,7 +1265,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestStatus">
-            <EntityTypeMapping TypeName="RescueModelNamespace.RequestStatus">
+            <EntityTypeMapping TypeName="RescueModel.RequestStatus">
               <MappingFragment StoreEntitySet="RequestStatus">
                 <ScalarProperty Name="RequestStatusId" ColumnName="RequestStatusId" />
                 <ScalarProperty Name="RequestStatusName" ColumnName="RequestStatusName" />
@@ -1197,7 +1273,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestType">
-            <EntityTypeMapping TypeName="RescueModelNamespace.RequestType">
+            <EntityTypeMapping TypeName="RescueModel.RequestType">
               <MappingFragment StoreEntitySet="RequestType">
                 <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
                 <ScalarProperty Name="RequestTypeName" ColumnName="RequestTypeName" />
@@ -1205,7 +1281,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RescueEquipmentSet">
-            <EntityTypeMapping TypeName="RescueModelNamespace.RescueEquipmentSet">
+            <EntityTypeMapping TypeName="RescueModel.RescueEquipmentSet">
               <MappingFragment StoreEntitySet="RescueEquipmentSet">
                 <ScalarProperty Name="RescueEquipmentSetId" ColumnName="RescueEquipmentSetId" />
                 <ScalarProperty Name="CarId" ColumnName="CarId" />
@@ -1217,7 +1293,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Rescuer">
-            <EntityTypeMapping TypeName="RescueModelNamespace.Rescuer">
+            <EntityTypeMapping TypeName="RescueModel.Rescuer">
               <MappingFragment StoreEntitySet="Rescuer">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
@@ -1227,7 +1303,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="RescueModelNamespace.sysdiagrams">
+            <EntityTypeMapping TypeName="RescueModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -1238,7 +1314,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserInformation">
-            <EntityTypeMapping TypeName="RescueModelNamespace.UserInformation">
+            <EntityTypeMapping TypeName="RescueModel.UserInformation">
               <MappingFragment StoreEntitySet="UserInformation">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -1250,7 +1326,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfile">
-            <EntityTypeMapping TypeName="RescueModelNamespace.UserProfile">
+            <EntityTypeMapping TypeName="RescueModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -1258,7 +1334,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="webpages_Membership">
-            <EntityTypeMapping TypeName="RescueModelNamespace.webpages_Membership">
+            <EntityTypeMapping TypeName="RescueModel.webpages_Membership">
               <MappingFragment StoreEntitySet="webpages_Membership">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1275,7 +1351,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="webpages_OAuthMembership">
-            <EntityTypeMapping TypeName="RescueModelNamespace.webpages_OAuthMembership">
+            <EntityTypeMapping TypeName="RescueModel.webpages_OAuthMembership">
               <MappingFragment StoreEntitySet="webpages_OAuthMembership">
                 <ScalarProperty Name="Provider" ColumnName="Provider" />
                 <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
@@ -1284,14 +1360,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="webpages_Roles">
-            <EntityTypeMapping TypeName="RescueModelNamespace.webpages_Roles">
+            <EntityTypeMapping TypeName="RescueModel.webpages_Roles">
               <MappingFragment StoreEntitySet="webpages_Roles">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="RescueModelNamespace.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="RescueModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
             <EndProperty Name="webpages_Roles">
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
@@ -1299,20 +1375,40 @@
               <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="RescueModelNamespace.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="RescueModelNamespace.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="RescueModelNamespace.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="RescueModelNamespace.Store.sp_helpdiagramdefinition">
+          <FunctionImportMapping FunctionName="RescueModel.Store.GetTeamDriverFIO" FunctionImportName="GetTeamDriverFIO">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="RescueModelNamespace.sp_helpdiagramdefinition_Result">
+              <ComplexTypeMapping TypeName="RescueModel.GetTeamDriverFIO_Result">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCarByName" FunctionName="RescueModel.Store.GetCarByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RescueModel.GetCarByName_Result">
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+                <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
+                <ScalarProperty Name="CarBrand" ColumnName="CarBrand" />
+                <ScalarProperty Name="CarModel" ColumnName="CarModel" />
+                <ScalarProperty Name="CarCondition" ColumnName="CarCondition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="RescueModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="RescueModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="RescueModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="RescueModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RescueModel.sp_helpdiagramdefinition_Result">
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="RescueModelNamespace.Store.sp_helpdiagrams">
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="RescueModel.Store.sp_helpdiagrams">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="RescueModelNamespace.sp_helpdiagrams_Result">
+              <ComplexTypeMapping TypeName="RescueModel.sp_helpdiagrams_Result">
                 <ScalarProperty Name="Database" ColumnName="Database" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1321,19 +1417,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="RescueModelNamespace.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="RescueModelNamespace.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="EmergencyTeamDeparture">
-            <EntityTypeMapping TypeName="RescueModelNamespace.EmergencyTeamDeparture">
-              <MappingFragment StoreEntitySet="EmergencyTeamDeparture">
-                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
-                <ScalarProperty Name="CarId" ColumnName="CarId" />
-                <ScalarProperty Name="EmergencyTeamId" ColumnName="EmergencyTeamId" />
-                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-                <ScalarProperty Name="EmergencyTeamDepartureId" ColumnName="EmergencyTeamDepartureId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="RescueModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="RescueModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="GetRequestOperatorFIO" FunctionName="RescueModel.Store.GetRequestOperatorFIO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RescueModel.GetRequestOperatorFIO_Result">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -40,8 +40,9 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.EmergencyTeamId = new SelectList(db.EmergencyTeam, "EmergencyTeamId", "EmergencyTeamId");
-            ViewBag.UserId = new SelectList(db.Employee, "UserId", "WorkPhone");
+            ViewBag.EmergencyTeamId = new SelectList(db.EmergencyTeam, "EmergencyTeamId", "EmergencyTeamName");
+            ViewBag.UserId = new SelectList(db.Employee.Where(e => e.Rescuer == null && e.Operator == null && e.Driver == null), "UserId", "UserId");
+            
             return View();
         }
 

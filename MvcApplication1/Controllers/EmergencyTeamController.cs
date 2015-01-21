@@ -27,10 +27,18 @@ namespace MvcApplication1.Controllers
         public ActionResult Details(int id = 0)
         {
             EmergencyTeam emergencyteam = db.EmergencyTeam.Find(id);
+            var q = db.Database.SqlQuery<GetTeamDriverFIO_Result>("SELECT * FROM [dbo].[GetTeamDriverFIO](N'" + emergencyteam.EmergencyTeamName + "')");
+            string DriverName = "";
+            if (q.Count()>0)
+            {
+                 DriverName = q.FirstOrDefault().LastName + " " + q.FirstOrDefault().FirstName + " " + q.FirstOrDefault().SecondName;
+            }
+            if (String.IsNullOrWhiteSpace(DriverName)) DriverName = "Нет водителя";
             if (emergencyteam == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.DriverName = DriverName;
             return View(emergencyteam);
         }
 

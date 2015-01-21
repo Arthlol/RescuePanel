@@ -32,9 +32,9 @@ namespace MvcApplication1.Models
         public string RequestReason { get; set; }
         public Nullable<bool> FakeRequest { get; set; }
     
+        public virtual ICollection<EmergencyTeamDeparture> EmergencyTeamDeparture { get; set; }
         public virtual Operator Operator { get; set; }
         public virtual RequestStatus RequestStatus { get; set; }
         public virtual RequestType RequestType { get; set; }
-        public virtual ICollection<EmergencyTeamDeparture> EmergencyTeamDeparture { get; set; }
     }
 }

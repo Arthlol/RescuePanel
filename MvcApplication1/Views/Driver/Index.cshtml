@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.DrivingLicenseCategory)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { item.UserId })
         </td>
     </tr>
 }

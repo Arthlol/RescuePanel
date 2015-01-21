@@ -32,6 +32,7 @@ namespace MvcApplication1.Models
         public DbSet<Car> Car { get; set; }
         public DbSet<Driver> Driver { get; set; }
         public DbSet<EmergencyTeam> EmergencyTeam { get; set; }
+        public DbSet<EmergencyTeamDeparture> EmergencyTeamDeparture { get; set; }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<JobTitle> JobTitle { get; set; }
         public DbSet<Operator> Operator { get; set; }
@@ -46,7 +47,25 @@ namespace MvcApplication1.Models
         public DbSet<webpages_Membership> webpages_Membership { get; set; }
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public DbSet<webpages_Roles> webpages_Roles { get; set; }
-        public DbSet<EmergencyTeamDeparture> EmergencyTeamDeparture { get; set; }
+    
+        [EdmFunction("RescueEntities", "GetTeamDriverFIO")]
+        public virtual IQueryable<GetTeamDriverFIO_Result> GetTeamDriverFIO(string teamName)
+        {
+            var teamNameParameter = teamName != null ?
+                new ObjectParameter("TeamName", teamName) :
+                new ObjectParameter("TeamName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetTeamDriverFIO_Result>("[RescueEntities].[GetTeamDriverFIO](@TeamName)", teamNameParameter);
+        }
+    
+        public virtual ObjectResult<GetCarByName_Result> GetCarByName(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCarByName_Result>("GetCarByName", nameParameter);
+        }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -149,6 +168,16 @@ namespace MvcApplication1.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        [EdmFunction("RescueEntities", "GetRequestOperatorFIO")]
+        public virtual IQueryable<GetRequestOperatorFIO_Result> GetRequestOperatorFIO(Nullable<int> idRequest)
+        {
+            var idRequestParameter = idRequest.HasValue ?
+                new ObjectParameter("IdRequest", idRequest) :
+                new ObjectParameter("IdRequest", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetRequestOperatorFIO_Result>("[RescueEntities].[GetRequestOperatorFIO](@IdRequest)", idRequestParameter);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace MvcApplication1.Models
     {
         public Car()
         {
-            this.RescueEquipmentSet = new HashSet<RescueEquipmentSet>();
             this.EmergencyTeamDeparture = new HashSet<EmergencyTeamDeparture>();
+            this.RescueEquipmentSet = new HashSet<RescueEquipmentSet>();
         }
     
         public int CarId { get; set; }
@@ -26,7 +26,7 @@ namespace MvcApplication1.Models
         public string CarModel { get; set; }
         public string CarCondition { get; set; }
     
-        public virtual ICollection<RescueEquipmentSet> RescueEquipmentSet { get; set; }
         public virtual ICollection<EmergencyTeamDeparture> EmergencyTeamDeparture { get; set; }
+        public virtual ICollection<RescueEquipmentSet> RescueEquipmentSet { get; set; }
     }
 }

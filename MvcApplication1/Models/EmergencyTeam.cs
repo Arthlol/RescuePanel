@@ -17,8 +17,8 @@ namespace MvcApplication1.Models
         public EmergencyTeam()
         {
             this.Driver = new HashSet<Driver>();
-            this.Rescuer = new HashSet<Rescuer>();
             this.EmergencyTeamDeparture = new HashSet<EmergencyTeamDeparture>();
+            this.Rescuer = new HashSet<Rescuer>();
         }
     
         public int EmergencyTeamId { get; set; }
@@ -26,7 +26,7 @@ namespace MvcApplication1.Models
         public string EmergencyTeamName { get; set; }
     
         public virtual ICollection<Driver> Driver { get; set; }
-        public virtual ICollection<Rescuer> Rescuer { get; set; }
         public virtual ICollection<EmergencyTeamDeparture> EmergencyTeamDeparture { get; set; }
+        public virtual ICollection<Rescuer> Rescuer { get; set; }
     }
 }

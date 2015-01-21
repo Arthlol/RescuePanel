@@ -15,7 +15,7 @@ namespace MvcApplication1.Models
     public partial class RescueEquipmentSet
     {
         public int RescueEquipmentSetId { get; set; }
-        public int CarId { get; set; }
+        public Nullable<int> CarId { get; set; }
         public Nullable<int> RescueEquipmentCount { get; set; }
         public string RescueEquipmentCondition { get; set; }
         public string RescueEquipmentDescription { get; set; }

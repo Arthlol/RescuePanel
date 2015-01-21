@@ -12,22 +12,10 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Operator.WorkShift)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.RequestStatus.RequestStatusName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RequestType.RequestTypeName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeclarantName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeclarantLastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeclarantMiddleName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RequestDate)
@@ -50,22 +38,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Operator.WorkShift)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.RequestStatus.RequestStatusName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RequestType.RequestTypeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeclarantName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeclarantLastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeclarantMiddleName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RequestDate)
