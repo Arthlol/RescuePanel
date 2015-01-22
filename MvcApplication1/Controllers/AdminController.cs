@@ -168,6 +168,7 @@ namespace MvcApplication1.Controllers
             db.Administrator.Remove(administrator);
             db.SaveChanges();
             return RedirectToAction("Index");
+            
         }
 
         protected override void Dispose(bool disposing)
