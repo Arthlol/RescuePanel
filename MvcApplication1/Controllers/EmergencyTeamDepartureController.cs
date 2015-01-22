@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
+using System.Web.Security;
 
 namespace MvcApplication1.Controllers
 {
@@ -18,6 +19,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             var emergencyteamdeparture = db.EmergencyTeamDeparture.Include(e => e.Car).Include(e => e.EmergencyTeam).Include(e => e.Request);
             return View(emergencyteamdeparture.ToList());
         }
@@ -27,6 +32,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             EmergencyTeamDeparture emergencyteamdeparture = db.EmergencyTeamDeparture.Find(id);
             if (emergencyteamdeparture == null)
             {
@@ -40,6 +49,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             ViewBag.CarId = new SelectList(db.Car, "CarId", "CarNumber");
             ViewBag.EmergencyTeamId = new SelectList(db.EmergencyTeam, "EmergencyTeamId", "EmergencyTeamName");
             ViewBag.RequestId = new SelectList(db.Request, "RequestId", "RequestId");
@@ -53,6 +66,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(EmergencyTeamDeparture emergencyteamdeparture)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.EmergencyTeamDeparture.Add(emergencyteamdeparture);
@@ -71,6 +88,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             EmergencyTeamDeparture emergencyteamdeparture = db.EmergencyTeamDeparture.Find(id);
             if (emergencyteamdeparture == null)
             {
@@ -78,7 +99,7 @@ namespace MvcApplication1.Controllers
             }
             ViewBag.CarId = new SelectList(db.Car, "CarId", "CarNumber", emergencyteamdeparture.CarId);
             ViewBag.EmergencyTeamId = new SelectList(db.EmergencyTeam, "EmergencyTeamId", "EmergencyTeamName", emergencyteamdeparture.EmergencyTeamId);
-            ViewBag.RequestId = new SelectList(db.Request, "RequestId", "DeclarantName", emergencyteamdeparture.RequestId);
+            ViewBag.RequestId = new SelectList(db.Request, "RequestId", "RequestId", emergencyteamdeparture.RequestId);
             return View(emergencyteamdeparture);
         }
 
@@ -89,6 +110,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EmergencyTeamDeparture emergencyteamdeparture)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(emergencyteamdeparture).State = EntityState.Modified;
@@ -106,6 +131,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             EmergencyTeamDeparture emergencyteamdeparture = db.EmergencyTeamDeparture.Find(id);
             if (emergencyteamdeparture == null)
             {
@@ -121,6 +150,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             EmergencyTeamDeparture emergencyteamdeparture = db.EmergencyTeamDeparture.Find(id);
             db.EmergencyTeamDeparture.Remove(emergencyteamdeparture);
             db.SaveChanges();

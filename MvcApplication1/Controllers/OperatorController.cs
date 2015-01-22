@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace MvcApplication1.Controllers
 {
@@ -18,6 +20,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             var @operator = db.Operator.Include(o => o.Employee);
             return View(@operator.ToList());
         }
@@ -27,6 +33,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Operator @operator = db.Operator.Find(id);
             if (@operator == null)
             {
@@ -40,6 +50,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             ViewBag.UserId = new SelectList(db.Employee.Where(e => e.Rescuer == null && e.Operator == null && e.Driver == null), "UserId", "UserId");
             return View();
         }
@@ -51,6 +65,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Operator @operator)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Operator.Add(@operator);
@@ -67,6 +85,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == id))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Operator @operator = db.Operator.Find(id);
             if (@operator == null)
             {
@@ -83,6 +105,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Operator @operator)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == @operator.UserId))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(@operator).State = EntityState.Modified;
@@ -98,6 +124,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Operator @operator = db.Operator.Find(id);
             if (@operator == null)
             {
@@ -113,6 +143,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Operator @operator = db.Operator.Find(id);
             db.Operator.Remove(@operator);
             db.SaveChanges();

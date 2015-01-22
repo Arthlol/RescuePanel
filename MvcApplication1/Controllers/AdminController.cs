@@ -8,7 +8,8 @@ using System.Web.Mvc;
 using MvcApplication1.Models;
 using WebMatrix.WebData;
 using System.Web.Security;
-
+using System.Data.SqlClient;
+using MvcApplication1.Filters;
 namespace MvcApplication1.Controllers
 {
     public class AdminController : Controller
@@ -17,27 +18,29 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Admin/
-
+        [InitializeSimpleMembership]
         public ActionResult Index()
         {
-
+            
             if (!Roles.IsUserInRole("Administrator"))
             {
-                return HttpNotFound();
+                return RedirectToAction("HttpError404", "Error");
             }
 
-            else
-            {
                 var administrator = db.Administrator.Include(a => a.UserInformation);
                 return View(administrator.ToList());
-            }
         }
 
         //
         // GET: /Admin/Details/5
-
+        [InitializeSimpleMembership]
         public ActionResult Details(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
+
             Administrator administrator = db.Administrator.Find(id);
             if (administrator == null)
             {
@@ -48,9 +51,14 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Admin/Create
-
+        [InitializeSimpleMembership]
         public ActionResult Create()
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
+
             ViewBag.UserId = new SelectList(db.UserInformation.Where(x => x.Administrator == null && x.Employee == null), "UserId", "UserId");
             return View();
         }
@@ -60,8 +68,13 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [InitializeSimpleMembership]
         public ActionResult Create(Administrator administrator)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 if (db.Administrator.Where(x => x.UserId == administrator.UserId).Count() == 0)
@@ -83,9 +96,13 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Admin/Edit/5
-
+        [InitializeSimpleMembership]
         public ActionResult Edit(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Administrator administrator = db.Administrator.Find(id);
             if (administrator == null)
             {
@@ -97,11 +114,15 @@ namespace MvcApplication1.Controllers
 
         //
         // POST: /Admin/Edit/5
-
+        [InitializeSimpleMembership]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Administrator administrator)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(administrator).State = EntityState.Modified;
@@ -114,9 +135,13 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Admin/Delete/5
-
+        [InitializeSimpleMembership]
         public ActionResult Delete(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Administrator administrator = db.Administrator.Find(id);
             if (administrator == null)
             {
@@ -130,8 +155,13 @@ namespace MvcApplication1.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [InitializeSimpleMembership]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Administrator administrator = db.Administrator.Find(id);
             Roles.RemoveUserFromRole(administrator.UserInformation.UserProfile.UserName, "Administrator");
             db.SaveChanges();

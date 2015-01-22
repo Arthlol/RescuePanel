@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace MvcApplication1.Controllers
 {
@@ -18,6 +20,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             return View(db.UserInformation.ToList());
         }
 
@@ -26,6 +32,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             UserInformation userinformation = db.UserInformation.Find(id);
             if (userinformation == null)
             {
@@ -39,6 +49,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             return View();
         }
 
@@ -49,6 +63,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserInformation userinformation)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.UserInformation.Add(userinformation);
@@ -64,6 +82,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == id))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             UserInformation userinformation = db.UserInformation.Find(id);
             if (userinformation == null)
             {
@@ -79,6 +101,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UserInformation userinformation)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == userinformation.UserId))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(userinformation).State = EntityState.Modified;
@@ -93,6 +119,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             UserInformation userinformation = db.UserInformation.Find(id);
             if (userinformation == null)
             {
@@ -108,6 +138,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             UserInformation userinformation = db.UserInformation.Find(id);
             db.UserInformation.Remove(userinformation);
             db.SaveChanges();

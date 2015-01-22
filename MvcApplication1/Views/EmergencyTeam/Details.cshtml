@@ -30,7 +30,6 @@
         @Html.Display("DriverName")
     </div>
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.EmergencyTeamId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+    <a href="javascript:history.back(1)">назад</a>
+</div>

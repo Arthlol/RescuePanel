@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
 using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace MvcApplication1.Controllers
 {
@@ -19,6 +20,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             return View(db.Employee.ToList());
         }
 
@@ -27,6 +32,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Employee employee = db.Employee.Find(id);
             if (employee == null)
             {
@@ -40,6 +49,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             ViewBag.UserId = new SelectList(db.UserInformation.Where(x => x.Administrator == null && x.Employee == null), "UserId", "UserId");
             ViewBag.JobTitleId = new SelectList(db.JobTitle, "JobTitleId", "JobTitleName");
             return View();
@@ -52,6 +65,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Employee employee)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 if (db.Employee.Where(x => x.UserId == employee.UserId).Count() == 0)
@@ -91,6 +108,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == id))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Employee employee = db.Employee.Find(id);
             ViewBag.JobTitleId = new SelectList(db.JobTitle, "JobTitleId", "JobTitleName",employee.JobTitleId);
             if (employee == null)
@@ -107,6 +128,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Employee employee)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == employee.UserId))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
@@ -121,6 +146,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Employee employee = db.Employee.Find(id);
             if (employee == null)
             {
@@ -136,6 +165,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Employee employee = db.Employee.Find(id);
             Roles.RemoveUserFromRole(employee.UserInformation.UserProfile.UserName, "Employee");
             db.SaveChanges();

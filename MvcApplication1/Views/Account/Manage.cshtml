@@ -9,7 +9,14 @@
 
 <p class="message-success">@ViewBag.StatusMessage</p>
 
-<p>You're logged in as <strong>@User.Identity.Name</strong>.</p>
+<p>You're logged in as <strong>
+    @foreach (string s in @Roles.GetRolesForUser())
+    { 
+      @s @Html.Raw(" ")
+        
+    }
+    
+    </strong>.</p>
 <p></p>
 @if (ViewBag.HasLocalPassword)
 {
@@ -33,6 +40,7 @@ else
     {
         @Html.ActionLink("Информация работника", "Edit", "Employee", new { id = WebSecurity.CurrentUserId }, null);
     }
+
 
     
        

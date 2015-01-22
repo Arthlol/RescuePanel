@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
 using WebMatrix.WebData;
+using System.Web.Security;
 
 namespace MvcApplication1.Controllers
 {
@@ -19,7 +20,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index(int? Status)
         {
-
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee") || Roles.IsUserInRole("User")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             //var request = db.Request.Include(r => r.Operator).Include(r => r.RequestStatus).Include(r => r.RequestType);
             IEnumerable<Request> list = db.Request.Include(r => r.Operator).Include(r => r.RequestStatus).Include(r => r.RequestType);
 
@@ -35,6 +39,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee") || Roles.IsUserInRole("User")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Request request = db.Request.Find(id);
             if (request == null)
             {
@@ -61,7 +69,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
-            
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee") || Roles.IsUserInRole("User")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (!(User.IsInRole("Administrator") || User.IsInRole("Employee")))
             {
                 ViewBag.UserId = new SelectList(db.Operator.Take(2), "UserId", "WorkShift", db.Operator.FirstOrDefault().UserId);
@@ -85,16 +96,29 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Request request)
         {
-            
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee") || Roles.IsUserInRole("User")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Request.Add(request);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.Operator, "UserId", "userId", db.Operator.First().UserId);
-            ViewBag.RequestStatusId = new SelectList(db.RequestStatus.Where(z => z.RequestStatusId == 1), "RequestStatusId", "RequestStatusName", 1);
-            ViewBag.RequestTypeId = new SelectList(db.RequestType, "RequestTypeId", "RequestTypeName",1);
+            if (!(User.IsInRole("Administrator") || User.IsInRole("Employee")))
+            {
+                ViewBag.UserId = new SelectList(db.Operator.Take(2), "UserId", "WorkShift", db.Operator.FirstOrDefault().UserId);
+                ViewBag.RequestStatusId = new SelectList(db.RequestStatus.Where(z => z.RequestStatusId == 1), "RequestStatusId", "RequestStatusName", 1);
+                ViewBag.RequestTypeId = new SelectList(db.RequestType.Where(z => z.RequestTypeId == 2), "RequestTypeId", "RequestTypeName", 2);
+            }
+            else
+                if ((User.IsInRole("Employee") && db.Operator.Find(WebSecurity.CurrentUserId) != null) || (User.IsInRole("Administrator")))
+                {
+                    ViewBag.UserId = new SelectList(db.Operator, "UserId", "UserId", db.Operator.First().UserId);
+                    ViewBag.RequestStatusId = new SelectList(db.RequestStatus, "RequestStatusId", "RequestStatusName", 1);
+                    ViewBag.RequestTypeId = new SelectList(db.RequestType, "RequestTypeId", "RequestTypeName", 1);
+                }
             return View(request);
         }
 
@@ -103,6 +127,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Request request = db.Request.Find(id);
             if (request == null)
             {
@@ -121,13 +149,17 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Request request)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(request).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.Operator, "UserId", "WorkShift", request.UserId);
+            ViewBag.UserId = new SelectList(db.Operator, "UserId", "UserId", request.UserId);
             ViewBag.RequestStatusId = new SelectList(db.RequestStatus, "RequestStatusId", "RequestStatusName", request.RequestStatusId);
             ViewBag.RequestTypeId = new SelectList(db.RequestType, "RequestTypeId", "RequestTypeName", request.RequestTypeId);
             return View(request);
@@ -138,6 +170,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Request request = db.Request.Find(id);
             if (request == null)
             {
@@ -153,6 +189,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Request request = db.Request.Find(id);
             db.Request.Remove(request);
             db.SaveChanges();

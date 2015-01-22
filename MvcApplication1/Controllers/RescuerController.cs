@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace MvcApplication1.Controllers
 {
@@ -18,6 +20,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             var rescuer = db.Rescuer.Include(r => r.EmergencyTeam).Include(r => r.Employee);
             return View(rescuer.ToList());
         }
@@ -27,6 +33,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Rescuer rescuer = db.Rescuer.Find(id);
             if (rescuer == null)
             {
@@ -40,6 +50,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             ViewBag.EmergencyTeamId = new SelectList(db.EmergencyTeam, "EmergencyTeamId", "EmergencyTeamName");
             ViewBag.UserId = new SelectList(db.Employee.Where(e => e.Rescuer == null && e.Operator == null && e.Driver == null), "UserId", "UserId");
             return View();
@@ -52,6 +66,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Rescuer rescuer)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Rescuer.Add(rescuer);
@@ -69,6 +87,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == id))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Rescuer rescuer = db.Rescuer.Find(id);
             if (rescuer == null)
             {
@@ -86,6 +108,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Rescuer rescuer)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == rescuer.UserId))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(rescuer).State = EntityState.Modified;
@@ -102,6 +128,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Rescuer rescuer = db.Rescuer.Find(id);
             if (rescuer == null)
             {
@@ -117,6 +147,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Rescuer rescuer = db.Rescuer.Find(id);
             db.Rescuer.Remove(rescuer);
             db.SaveChanges();

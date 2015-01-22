@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
+using System.Web.Security;
 
 namespace MvcApplication1.Controllers
 {
@@ -18,6 +19,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             var rescueequipmentset = db.RescueEquipmentSet.Include(r => r.Car);
             return View(rescueequipmentset.ToList());
         }
@@ -27,6 +32,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             RescueEquipmentSet rescueequipmentset = db.RescueEquipmentSet.Find(id);
             if (rescueequipmentset == null)
             {
@@ -40,6 +49,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             ViewBag.CarId = new SelectList(db.Car, "CarId", "CarNumber");
             return View();
         }
@@ -51,6 +64,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RescueEquipmentSet rescueequipmentset)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.RescueEquipmentSet.Add(rescueequipmentset);
@@ -67,6 +84,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             RescueEquipmentSet rescueequipmentset = db.RescueEquipmentSet.Find(id);
             if (rescueequipmentset == null)
             {
@@ -83,6 +104,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(RescueEquipmentSet rescueequipmentset)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(rescueequipmentset).State = EntityState.Modified;
@@ -98,6 +123,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             RescueEquipmentSet rescueequipmentset = db.RescueEquipmentSet.Find(id);
             if (rescueequipmentset == null)
             {
@@ -113,6 +142,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             RescueEquipmentSet rescueequipmentset = db.RescueEquipmentSet.Find(id);
             db.RescueEquipmentSet.Remove(rescueequipmentset);
             db.SaveChanges();

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace MvcApplication1.Controllers
 {
@@ -16,10 +18,19 @@ namespace MvcApplication1.Controllers
         //
         // GET: /Driver/
 
-        public ActionResult Index()
+        public ActionResult Index(int? Status)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
+            IEnumerable<Driver> list = db.Driver.Include(d => d.EmergencyTeam).Include(d => d.Employee);
+            DateTime? date =  DateTime.Now.AddYears(-5);
+            
+            if (Status == 1) list = list.Where(l => l.RecertificationDate < date);
+
             var driver = db.Driver.Include(d => d.EmergencyTeam).Include(d => d.Employee);
-            return View(driver.ToList());
+            return View(list);
         }
 
         //
@@ -27,6 +38,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Driver driver = db.Driver.Find(id);
             if (driver == null)
             {
@@ -40,6 +55,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             ViewBag.EmergencyTeamId = new SelectList(db.EmergencyTeam, "EmergencyTeamId", "EmergencyTeamName");
             ViewBag.UserId = new SelectList(db.Employee.Where(e => e.Rescuer == null && e.Operator == null && e.Driver == null), "UserId", "UserId");
             
@@ -53,6 +72,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Driver driver)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Driver.Add(driver);
@@ -70,6 +93,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == id))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Driver driver = db.Driver.Find(id);
             if (driver == null)
             {
@@ -87,6 +114,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Driver driver)
         {
+            if (!(Roles.IsUserInRole("Administrator") || WebSecurity.CurrentUserId == driver.UserId))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(driver).State = EntityState.Modified;
@@ -103,6 +134,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Driver driver = db.Driver.Find(id);
             if (driver == null)
             {
@@ -118,6 +153,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Driver driver = db.Driver.Find(id);
             db.Driver.Remove(driver);
             db.SaveChanges();

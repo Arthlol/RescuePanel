@@ -37,7 +37,29 @@
         @Html.DisplayFor(model => model.WorkPhone)
     </div>
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (Model.Driver!=null)
+{
+    @Html.ActionLink("Информация водителя", "Edit", "Driver", new { id = WebSecurity.CurrentUserId }, null);
+}
+
+@if (Model.Operator != null)
+{
+    @Html.ActionLink("Информация оператора", "Edit", "Driver", new { id = WebSecurity.CurrentUserId }, null);
+}
+@if (Model.Rescuer != null)
+{
+    @Html.ActionLink("Информация спасателя", "Edit", "Driver", new { id = WebSecurity.CurrentUserId }, null);
+}
+
+
+
+
+
+
+
+
+<div>
+    <a href="javascript:history.back(1)">назад</a>
+</div>
+
+

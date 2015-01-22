@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using MvcApplication1.Models;
 using System.Data.SqlClient;
+using System.Web.Security;
+using MvcApplication1.Filters;
 namespace MvcApplication1.Controllers
 {
     public class CarController : Controller
@@ -15,14 +17,23 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Car/
-
         public ActionResult Index()
         {
+
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
+
             return View(db.Car.ToList());
         }
         [HttpPost]
         public ActionResult Index(string NamePart)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             List<Car> car;
             if (NamePart != null)
             {
@@ -36,6 +47,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Car car = db.Car.Find(id);
             if (car == null)
             {
@@ -49,6 +64,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Create()
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             return View();
         }
 
@@ -59,6 +78,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Car car)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Car.Add(car);
@@ -74,6 +97,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Car car = db.Car.Find(id);
             if (car == null)
             {
@@ -89,6 +116,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Car car)
         {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(car).State = EntityState.Modified;
@@ -103,6 +134,10 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Delete(int id = 0)
         {
+            if (!Roles.IsUserInRole("Administrator") || !Roles.IsUserInRole("Employee"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Car car = db.Car.Find(id);
             if (car == null)
             {
@@ -118,6 +153,10 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Roles.IsUserInRole("Administrator") || !Roles.IsUserInRole("Employee"))
+            {
+                return RedirectToAction("HttpError404", "Error");
+            }
             Car car = db.Car.Find(id);
             db.Car.Remove(car);
             db.SaveChanges();

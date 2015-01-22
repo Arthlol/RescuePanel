@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace MvcApplication1.Controllers
 {
@@ -10,16 +11,35 @@ namespace MvcApplication1.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Hello coursach";
-
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
-
             return View();
         }
+
+        public ActionResult AdminLogin()
+        {
+
+            WebSecurity.Login("PresentationAdmin", "123456");
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult OperatorLogin()
+        {
+
+            WebSecurity.Login("PresentationOperator", "123456");
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult UserLogin()
+        {
+
+            WebSecurity.Login("PresentationUser", "123456");
+            return RedirectToAction("Index", "Home");
+        }
+
+        
     }
 }

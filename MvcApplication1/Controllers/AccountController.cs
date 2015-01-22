@@ -144,6 +144,7 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Manage(ManageMessageId? message)
         {
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Ваш пароль был изменен"
                 : message == ManageMessageId.SetPasswordSuccess ? "Ваш пароль был задан"

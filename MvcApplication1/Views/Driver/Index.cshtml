@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+   
 }
 
 <h2>Index</h2>
@@ -9,6 +10,10 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@Html.ActionLink("Прошедшие последнюю переаттестацию более 5 лет назад", "Index", new { Status = 1 }) |
+@Html.ActionLink("Все", "Index")
+
+
 <table>
     <tr>
         <th>
