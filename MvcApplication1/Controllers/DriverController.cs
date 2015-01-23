@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using MvcApplication1.Models;
 using System.Web.Security;
 using WebMatrix.WebData;
-
+// Создание, удаление, редактирование, просмотр записей водителей
 namespace MvcApplication1.Controllers
 {
     public class DriverController : Controller
@@ -26,7 +26,7 @@ namespace MvcApplication1.Controllers
             }
             IEnumerable<Driver> list = db.Driver.Include(d => d.EmergencyTeam).Include(d => d.Employee);
             DateTime? date =  DateTime.Now.AddYears(-5);
-            
+            // Фильтрация водителей, у которых дата последней переаттестации была позже чем 5 лет назад
             if (Status == 1) list = list.Where(l => l.RecertificationDate < date);
 
             var driver = db.Driver.Include(d => d.EmergencyTeam).Include(d => d.Employee);

@@ -17,9 +17,10 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Car/
+        // Список машин
         public ActionResult Index()
         {
-
+            // Проверка ролей
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
             {
                 return RedirectToAction("HttpError404", "Error");
@@ -44,7 +45,7 @@ namespace MvcApplication1.Controllers
         }
         //
         // GET: /Car/Details/5
-
+        // Описание определенной машины
         public ActionResult Details(int id = 0)
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
@@ -61,7 +62,7 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Car/Create
-
+        // Добавление автомобиля
         public ActionResult Create()
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
@@ -94,7 +95,7 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Car/Edit/5
-
+        // Редактирование информации об авто
         public ActionResult Edit(int id = 0)
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Employee")))
@@ -131,7 +132,7 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Car/Delete/5
-
+        // Удаление информации об авто
         public ActionResult Delete(int id = 0)
         {
             if (!Roles.IsUserInRole("Administrator") || !Roles.IsUserInRole("Employee"))

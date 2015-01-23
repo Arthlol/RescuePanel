@@ -10,6 +10,7 @@ using System.Web.Security;
 
 namespace MvcApplication1.Controllers
 {
+    // Создание, удаление, редактирование, просмотр записей выездов поисково-спасательных групп
     public class EmergencyTeamDepartureController : Controller
     {
         private RescueEntities db = new RescueEntities();

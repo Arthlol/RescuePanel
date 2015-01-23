@@ -16,6 +16,7 @@ namespace MvcApplication1.Controllers
 
     [Authorize]
     [InitializeSimpleMembership]
+    //Управляет логикой авторизации и регистрации
     public class AccountController : Controller
     {
 
@@ -24,6 +25,7 @@ namespace MvcApplication1.Controllers
         // GET: /Account/Login
 
         [AllowAnonymous]
+        // Форма авторизации
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -50,7 +52,7 @@ namespace MvcApplication1.Controllers
 
         //
         // POST: /Account/LogOff
-
+        // Выход из системы
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -62,7 +64,7 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Account/Register
-
+        // Форма регистрации
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -79,7 +81,7 @@ namespace MvcApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
+                // Пытаемся зарегистрировать пользователя
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
@@ -141,14 +143,13 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Account/Manage
-
+        //Показывает форму для редактирования учетной записи
         public ActionResult Manage(ManageMessageId? message)
         {
 
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Ваш пароль был изменен"
                 : message == ManageMessageId.SetPasswordSuccess ? "Ваш пароль был задан"
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -398,10 +399,10 @@ namespace MvcApplication1.Controllers
                     return "Данная электронная почта уже занята.";
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return "Неверный пароль";
 
                 case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
+                    return "Неправильная электронная почта";
 
                 case MembershipCreateStatus.InvalidAnswer:
                     return "The password retrieval answer provided is invalid. Please check the value and try again.";

@@ -10,6 +10,7 @@ using System.Web.Security;
 
 namespace MvcApplication1.Controllers
 {
+    // Создание, удаление, редактирование, просмотр записей поисково-спасательных групп
     public class EmergencyTeamController : Controller
     {
         private RescueEntities db = new RescueEntities();
@@ -40,12 +41,15 @@ namespace MvcApplication1.Controllers
             {
                 return HttpNotFound();
             }
+            // SQL запрос в БД на поиск водителя определенной поисково спасательной группы
             var q = db.Database.SqlQuery<GetTeamDriverFIO_Result>("SELECT * FROM [dbo].[GetTeamDriverFIO](N'" + emergencyteam.EmergencyTeamName + "')");
             string DriverName = "";
             if (q.Count() > 0)
             {
+                // Перевод ФИО в одну строку для дальнейшего отображения в представлении
                 DriverName = q.FirstOrDefault().LastName + " " + q.FirstOrDefault().FirstName + " " + q.FirstOrDefault().SecondName;
             }
+            // если водитель не найден
             if (String.IsNullOrWhiteSpace(DriverName)) DriverName = "Нет водителя";
             ViewBag.DriverName = DriverName;
             return View(emergencyteam);

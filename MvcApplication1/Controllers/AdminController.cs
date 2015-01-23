@@ -18,10 +18,11 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Admin/
+        // Показывает список всех администраторов
         [InitializeSimpleMembership]
         public ActionResult Index()
         {
-            
+            // Если текущий пользователь не администратор - послать ошибку 404
             if (!Roles.IsUserInRole("Administrator"))
             {
                 return RedirectToAction("HttpError404", "Error");
@@ -33,6 +34,7 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Admin/Details/5
+        // Показывает поля записи конкретного администратора
         [InitializeSimpleMembership]
         public ActionResult Details(int id = 0)
         {
@@ -51,6 +53,7 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Admin/Create
+        // Форма создания администратора
         [InitializeSimpleMembership]
         public ActionResult Create()
         {
@@ -97,6 +100,7 @@ namespace MvcApplication1.Controllers
         //
         // GET: /Admin/Edit/5
         [InitializeSimpleMembership]
+        // Редактирование
         public ActionResult Edit(int id = 0)
         {
             if (!Roles.IsUserInRole("Administrator"))
@@ -135,6 +139,7 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Admin/Delete/5
+        // Удаление
         [InitializeSimpleMembership]
         public ActionResult Delete(int id = 0)
         {
